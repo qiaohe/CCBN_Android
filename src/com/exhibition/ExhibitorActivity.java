@@ -80,11 +80,14 @@ public class ExhibitorActivity extends Activity implements
 		startActivity(it);
 		finish();
 	}
-
+	
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
-		
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent it = new Intent(ExhibitorActivity.this, ExhibitorDetailActivity.class);
+		it.putExtra("company", mExhibitors.get(position).getCompany());
+		it.putExtra("location", mExhibitors.get(position).getLocation());
+		startActivity(it);  
 	}
 	
 }

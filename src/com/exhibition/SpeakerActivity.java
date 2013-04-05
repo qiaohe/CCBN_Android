@@ -51,7 +51,7 @@ public class SpeakerActivity extends Activity implements ActivityInterface,OnScr
 	private ListView mSpeakerListView;
 	private SideBar mIndexBar;
 	private WindowManager mWindowManager;
-	private TextView txtOverlay; // 用来放在WindowManager中显示提示字符
+	private TextView txtOverlay; // 	用来放在WindowManager中显示提示字符
 	public static String[] mNicks;
 	private int scrollState; // 滚动的状态
 	private Handler handler;

@@ -33,7 +33,7 @@ public class MyClient {
             @Override
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline result = new DefaultChannelPipeline();
-                result.addLast("encode", new StringEncoder());
+                result.addLast("encode", new StringEncoder());//增加处理器
                 result.addLast("decode", new StringDecoder());
                 result.addLast("handler", new ClientHandler());
                 return result;

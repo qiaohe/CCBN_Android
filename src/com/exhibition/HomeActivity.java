@@ -60,8 +60,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private ArrayList<Speaker> mSpeakers = new ArrayList<EventData.Speaker>();
 	private int[] itemImgs = { R.drawable.schedule, R.drawable.exhibitors,
 			R.drawable.speakers, R.drawable.about, R.drawable.setting,
-			R.drawable.maps };
-	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图" };
+			R.drawable.maps };  
+	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图" };   
 	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 	private MobileConfig mMobileConfig;
 	private Gson gson = new Gson();
@@ -75,7 +75,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.home_page);
+		setContentView(R.layout.home_page);  
 		initData();
 		findView();
 		addAction();
@@ -84,14 +84,13 @@ public class HomeActivity extends Activity implements ActivityInterface,
 				linkSevice();
 				try {
 					sleep(3000);
-					registSevice();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					registSevice();  
+				} catch (InterruptedException e) { 
 					e.printStackTrace();
 				}  
 				checkIn();
 			};
-		}.start();
+		}.start(); 
 	}
 
 	private void initData() {
@@ -160,6 +159,13 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			break;
 		case 4:
 			linkSevice();
+			it = new Intent(HomeActivity.this, ConfigActivity.class);
+			startActivity(it);
+			linkSevice();
+			break;
+		case 5:
+			it = new Intent(HomeActivity.this, MapActivity.class);
+			startActivity(it);
 			break;
 		}
 	}

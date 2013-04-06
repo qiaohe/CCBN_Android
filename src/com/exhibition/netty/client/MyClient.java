@@ -41,8 +41,7 @@ public class MyClient {
         });
         bootstrap.setOption("tcpNoDelay", true);
         bootstrap.setOption("keepAlive", true);
-    }
-
+    }   
     private ChannelFuture getChannelFuture(final String host,final int poot) {
         ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(host, poot));
         channelFuture.awaitUninterruptibly();

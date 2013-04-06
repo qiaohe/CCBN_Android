@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +28,8 @@ import com.exhibition.entities.EventData.Exhibitor;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.utils.DateFormatUtil;
 
-public class SchShowActivity extends Activity implements ActivityInterface {
+public class SchShowActivity extends Activity implements 
+		ActivityInterface, OnItemClickListener {
 	private ListView mSchShowListView;
 	private SchShowListViewAdapter mShowAdapter;
 	private List<EventSchedule> mEventSchedules = new ArrayList<EventSchedule>();
@@ -56,7 +59,7 @@ public class SchShowActivity extends Activity implements ActivityInterface {
 				"sch");
 		mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");
 
-		// mDetails = getIntent().getExtras().getStringArrayList("detail");
+		//mDetails = getIntent().getExtras().getStringArrayList("detail");
 		titleStr = getIntent().getStringExtra("title");
 		if (mEventSchedules != null) {
 			getEventTheme();
@@ -109,7 +112,7 @@ public class SchShowActivity extends Activity implements ActivityInterface {
 
 	@Override
 	public void addAction() {
-
+		mSchShowListView.setOnItemClickListener(this);
 	}
 
 	private void goToHomePage() {
@@ -203,5 +206,15 @@ public class SchShowActivity extends Activity implements ActivityInterface {
 			LinearLayout mSchShowLogBar;
 			TextView mSchShowLog;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent it = new Intent(SchShowActivity.this, ScheduleDetailActivity.class);
+		it.putExtra("date", mDates.get(position));
+		it.putExtra("detail",mEventSchedules.get(position).getDescription());
+		startActivity(it);
+		
 	}
 }

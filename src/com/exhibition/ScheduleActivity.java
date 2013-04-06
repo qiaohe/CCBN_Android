@@ -139,6 +139,7 @@ public class ScheduleActivity extends Activity implements ActivityInterface,
 		default:
 			break;
 		}
+		
 	}
 
 	private void goToHomePage() {

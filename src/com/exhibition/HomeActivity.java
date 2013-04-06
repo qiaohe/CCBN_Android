@@ -161,7 +161,6 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			linkSevice();
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
 			startActivity(it);
-			linkSevice();
 			break;
 		case 5:
 			it = new Intent(HomeActivity.this, MapActivity.class);
@@ -220,6 +219,6 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		System.out.println("2131312321321313131321======================"+e.getMessage());
 		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");
 	}
-
+	
 	
 }

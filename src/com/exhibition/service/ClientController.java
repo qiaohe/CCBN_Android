@@ -92,7 +92,7 @@ public class ClientController {
 	}
 
 	/**
-	 * 得到与controller相互关联的Activity对象
+	 * 得到（controller相互关联Activity）的对象
 	 */
 	public static synchronized ClientController getController(Activity act) {
 		if (controller == null) {

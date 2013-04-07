@@ -18,7 +18,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 import com.google.gson.Gson;
 
 public class MyClient {
-	//Ò»¸ö´´½¨¿Í»§¶ËÍ¨µÀºÍ³¢ÊÔÁ¬½ÓµÄ°ïÖúÀà.
+	//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ°ï¿½ï¿½ï¿½ï¿½ï¿½.
 	private ClientBootstrap bootstrap;
 	
 	public interface MessageListener {
@@ -35,26 +35,28 @@ public class MyClient {
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline result = new DefaultChannelPipeline();
                 
-                result.addLast("encode", new StringEncoder());//Ôö¼Ó´¦ÀíÆ÷
+                result.addLast("encode", new StringEncoder());//ï¿½ï¿½ï¿½Ó´ï¿½ï¿½ï¿½ï¿½ï¿½
                 result.addLast("decode", new StringDecoder());
                 result.addLast("handler", new ClientHandler());
                 return result;
             }
         });
         
-        bootstrap.setOption("tcpNoDelay", true);  //ÉèÖÃÑ¡Ïî¼¯
+        bootstrap.setOption("tcpNoDelay", true);  //ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½î¼¯
         bootstrap.setOption("keepAlive", true);
-    }   
+    }
+	
 	/**
-	 * ½¨Á¢socketÁ¬½Ó
-	 * @param host µØÖ·
-	 * @param poot ¶Ë¿ÚºÅ
+	 * ï¿½ï¿½ï¿½ï¿½socketï¿½ï¿½ï¿½ï¿½
+	 * @param host ï¿½ï¿½Ö·
+	 * @param poot ï¿½Ë¿Úºï¿½
 	 * @return
 	 */
+	
     private ChannelFuture getChannelFuture(final String host,final int poot) {
         ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(host, poot));
         
-        channelFuture.awaitUninterruptibly();//µÈ´ý¸ÃfutureÍê³É.¸Ã·½·¨»á²¶×½InterruptedException²¢°²¾²¶ªÆú
+        channelFuture.awaitUninterruptibly();//ï¿½È´ï¿½ï¿½futureï¿½ï¿½ï¿½.ï¿½Ã·ï¿½ï¿½ï¿½ï¿½á²¶×½InterruptedExceptionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (!channelFuture.isSuccess()) {
             channelFuture.getChannel().getCloseFuture().awaitUninterruptibly();
             return null;
@@ -65,7 +67,7 @@ public class MyClient {
     public void send(final String jSonMessage,final String host,final int poot) {
        
     	
-        ChannelFuture future = getChannelFuture(host,poot);		//Ò»¸öÍ¨µÀµÄÒì²½ I/O²Ù×÷½á¹û
+        ChannelFuture future = getChannelFuture(host,poot);		//Ò»ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ì²½ I/Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (future != null) {
             future.getChannel().write(jSonMessage);
         }

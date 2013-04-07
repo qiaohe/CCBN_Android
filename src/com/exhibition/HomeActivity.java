@@ -1,5 +1,6 @@
 package com.exhibition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,7 @@ import com.exhibition.netty.client.ClientData;
 import com.exhibition.netty.client.MyClient;
 import com.exhibition.netty.client.MyClient.MessageListener;
 import com.exhibition.service.ClientController;
+import com.exhibition.service.SocketService;
 import com.exhibition.utils.DataUtil;
 import com.exhibition.utils.MobileConfig;
 import com.exhibition.utils.NotificationUtil;
@@ -62,10 +64,9 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			R.drawable.speakers, R.drawable.about, R.drawable.setting,
 			R.drawable.maps };  
 	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图" };   
-	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-	private MobileConfig mMobileConfig;
-	private Gson gson = new Gson();
-	private ClientController controller;  
+	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();  
+	private ClientController controller; 
+	private ArrayList<ClientController>  listController = new ArrayList<ClientController>();
 	private double latitude;
 	private double longitude;
 	private String address = "";
@@ -79,27 +80,24 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		initData();
 		findView();
 		addAction();
-		new Thread() {
-			public void run() {
-				linkSevice();
-				try {
-					sleep(3000);
-					registSevice();  
-				} catch (InterruptedException e) { 
-					e.printStackTrace();
-				}  
-				checkIn();
-			};
-		}.start(); 
+		
+		
+		//打开socket连接服务(包括签到)
+		Intent intent = new Intent(this,SocketService.class);
+		//intent.putExtra("listController", listController);
+		intent.putExtra("latitude", latitude);
+		intent.putExtra("longitude",longitude);
+		intent.putExtra("address", address);
+		startService(intent);
 	}
 
 	private void initData() {
 		mEventData = DataUtil.getEventData(this);
 		mEventSchedules = DataUtil.getEventSchedules(this);
 		mExhibitors = DataUtil.getExhibitors(this);
-		mSpeakers = DataUtil.getSpeakers(this);
-		mMobileConfig = MobileConfig.getMobileConfig(this);
+		mSpeakers = DataUtil.getSpeakers(this); 
 		controller = ClientController.getController(this);
+		//listController.add(controller);
 		latitude = getIntent().getDoubleExtra("latitude", 0.0);
 		longitude = getIntent().getDoubleExtra("longitude", 0.0);
 		address = getIntent().getStringExtra("address");
@@ -157,8 +155,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
-		case 4:
-			linkSevice();
+		case 4: 
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
 			startActivity(it);
 			break;
@@ -169,50 +166,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		}
 	}
   
-	private void linkSevice() {
-		if (XmlDB.getInstance(this)
-				.getKeyStringValue(StringPools.mServiceToken, "").equals("")) {
-			MyClient client = new MyClient();
-			ClientData data = new ClientData();
-			data.setMacAddress(mMobileConfig.getLocalMacAddress());
-			data.setAppCode("CCBN");
-			String startupMessage = gson.toJson(data);
-			client.send(startupMessage, "10.94.6.111", 8888);//本地服务器
-			flag = false;
-			System.out.println("----------------clientStart-----------------");
-		}
-	}
-
-	private void registSevice() {
-		try {
-			if (!XmlDB.getInstance(this)
-					.getKeyStringValue(StringPools.mServiceToken, "")
-					.equals(""))
-				controller.getService().registService(
-						XmlDB.getInstance(this).getKeyStringValue(
-								StringPools.mServiceToken, ""), "CCBN",
-						"ANDROID");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	private void checkIn() {
-		try {
-			System.out.println("21312321312312321"
-					+ XmlDB.getInstance(this).getKeyStringValue(
-							StringPools.mServiceToken, ""));
-			controller
-					.getService()
-					.checkIn(
-							XmlDB.getInstance(this).getKeyStringValue(
-									StringPools.mServiceToken, ""),
-							"CCBN", latitude,longitude, address);
-		} catch (NotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	@Override
 	public void onMessageReceived(MessageEvent e) {

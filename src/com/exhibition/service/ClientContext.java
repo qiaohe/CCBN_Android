@@ -1,5 +1,6 @@
 package com.exhibition.service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -8,7 +9,7 @@ import java.util.Properties;
  * @author clhe
  */
 
-public class ClientContext {
+public class ClientContext implements Serializable{
 	/**
 	 * 客户端配置参数
 	 */

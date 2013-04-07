@@ -3,6 +3,7 @@ package com.exhibition.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Properties;
 
 import android.app.Activity;
@@ -14,7 +15,7 @@ import android.telephony.TelephonyManager;
  * 客户端控制器类，用来控制页面的跳转，响应界面按钮事件。该类在整个应用程序中单例
  * @author clhe
  */
-public class ClientController {
+public class ClientController implements Serializable {
 	/**
 	 * 客户端上下文，该对象用来缓存客户端业务对象及配置参数
 	 */
@@ -39,6 +40,12 @@ public class ClientController {
 
 	private ClientController(Activity act) {
 		this.currentActivity = act;
+		context = ClientContext.createClientContext();
+		loadClientConfig();
+		service = new ClientServiceImplForNet(context);
+	}
+	
+	public ClientController() {
 		context = ClientContext.createClientContext();
 		loadClientConfig();
 		service = new ClientServiceImplForNet(context);

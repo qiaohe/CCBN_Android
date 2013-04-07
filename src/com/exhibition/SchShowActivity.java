@@ -57,7 +57,7 @@ public class SchShowActivity extends Activity implements
 	private void initData() {
 		mEventSchedules = (List<EventSchedule>) getIntent().getExtras().get(
 				"sch");
-		mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");
+		//mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");
 
 		//mDetails = getIntent().getExtras().getStringArrayList("detail");
 		titleStr = getIntent().getStringExtra("title");
@@ -170,8 +170,7 @@ public class SchShowActivity extends Activity implements
 			if (null != data.get(position).get("schDate")) {
 				schDatelog = data.get(position).get("schDate");
 			} else {
-				schDatelog = data.get(position).get("exhLoca").substring(0, 1);
-						;
+				schDatelog = data.get(position).get("exhLoca").substring(0, 1);  
 			}
 			if (position == 0) {
 				holder.mSchShowLogBar.setVisibility(View.VISIBLE);

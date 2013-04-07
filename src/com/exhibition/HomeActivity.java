@@ -177,7 +177,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			data.setMacAddress(mMobileConfig.getLocalMacAddress());
 			data.setAppCode("CCBN");
 			String startupMessage = gson.toJson(data);
-			client.send(startupMessage, "192.168.0.101", 8888);
+			client.send(startupMessage, "10.94.6.111", 8888);//本地服务器
 			flag = false;
 			System.out.println("----------------clientStart-----------------");
 		}

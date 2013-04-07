@@ -1,5 +1,8 @@
 package com.exhibition;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -193,6 +196,13 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			// 经纬度所对应的位置
 			sb.append(result.strAddr).append("/n");
 			addressStr = sb.toString();
+			try {
+				addressStr = new String(addressStr.getBytes(),"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			mCheckInData.address = addressStr;
 			System.out.println(addressStr);
 			goToNextPage();

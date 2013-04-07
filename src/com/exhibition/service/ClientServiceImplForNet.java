@@ -3,6 +3,7 @@ package com.exhibition.service;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.exhibition.netty.client.ClientServiceToken;
@@ -58,8 +59,9 @@ public class ClientServiceImplForNet implements ClientService {
 		NameValuePair param1 = new BasicNameValuePair("serviceToken", serviceToken);
 		NameValuePair param2 = new BasicNameValuePair("exhibitionCode", exhibitionCode);
 		NameValuePair param3 = new BasicNameValuePair("latitude", latitude+"");
-		NameValuePair param4 = new BasicNameValuePair("longitude", longitude+"");
+		NameValuePair param4 = new BasicNameValuePair("longitude", longitude+""); 
 		NameValuePair param5 = new BasicNameValuePair("address", address);
+		
 		try {
 			System.out.println(param1+":"+param2+":"+param3+":"+param4+":"+param5);
 			// 使用工具类直接发出POST请求
@@ -165,7 +167,7 @@ public class ClientServiceImplForNet implements ClientService {
 
 	public String registService(String serviceToken, String exhibitionCode,
 			String mobilePlatform) throws Exception {
-		final String url = "http://" + "192.168.0.101:8080" + "/exhibition/api/attendees";
+		final String url = "http://" + serverIP + "/exhibition/api/attendees";
 		ClientServiceToken mClientServiceToken = new ClientServiceToken();
 		mClientServiceToken.setServiceToken(serviceToken);
 		mClientServiceToken.setExhibitionCode(exhibitionCode);

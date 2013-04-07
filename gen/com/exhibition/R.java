@@ -80,8 +80,9 @@ public final class R {
         public static final int shouhou_1=0x7f02003a;
         public static final int show_head_toast_bg=0x7f02003b;
         public static final int speakers=0x7f02003c;
-        public static final int title_bar=0x7f02003d;
-        public static final int xiangqing=0x7f02003e;
+        public static final int staticmap=0x7f02003d;
+        public static final int title_bar=0x7f02003e;
+        public static final int xiangqing=0x7f02003f;
     }
     public static final class id {
         public static final int TabHost01=0x7f090015;

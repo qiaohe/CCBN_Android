@@ -13,7 +13,7 @@ import com.baidu.mapapi.map.MKEvent;
 public class DemoApplication extends Application {
 	
     private static DemoApplication mInstance = null;
-    public boolean m_bKeyRight = true;
+    public boolean m_bKeyRight = true;  
     BMapManager mBMapManager = null;
 
     public static final String strKey = "63541DA073C3E684B5815C6A1FB24599E42FF479";

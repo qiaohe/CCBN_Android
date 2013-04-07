@@ -13,6 +13,7 @@ import com.exhibition.entities.EventData.Speaker;
 import com.google.gson.Gson;
 
 import android.content.Context;
+import android.util.Log;
 
 public class DataUtil {
 	private static EventData mEventData;

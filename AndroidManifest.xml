@@ -59,6 +59,26 @@
             android:screenOrientation="portrait" >
             
         </activity>
+        <activity
+            android:name=".ExhibitorDetailActivity"
+            android:screenOrientation="portrait" >
+            
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:screenOrientation="portrait" >
+            
+        </activity>
+        <activity
+            android:name=".ConfigActivity"
+            android:screenOrientation="portrait" >
+            
+        </activity>  
+        <activity
+            android:name=".ScheduleDetailActivity"
+            android:screenOrientation="portrait" >
+            
+        </activity> 
         
         <service android:name="com.baidu.location.f" android:enabled="true"
 			android:process=":remote">

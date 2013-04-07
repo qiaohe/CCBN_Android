@@ -24,7 +24,8 @@ public class AsyncImageLoader {
 	public Drawable loadDrawable(final String imageUrl,
 			final ImageCallback callback) {
 		if (imageCache.containsKey(imageUrl)) {
-			SoftReference<Drawable> softReference = imageCache.get(imageUrl);
+			SoftReference
+			<Drawable> softReference = imageCache.get(imageUrl);
 			if (softReference.get() != null) {
 				return softReference.get();
 			}
@@ -35,6 +36,7 @@ public class AsyncImageLoader {
 					final Drawable drawable = loadImageFromUrl(imageUrl);
 					imageCache.put(imageUrl, new SoftReference<Drawable>(
 							drawable));
+					//post立即把线程加到消息队列中
 					handler.post(new Runnable() {
 						public void run() {
 							callback.imageLoaded(drawable);
@@ -53,11 +55,11 @@ public class AsyncImageLoader {
 			URL url = new URL(imageUrl);
 			InputStream is = url.openStream();
 			System.out.println("" + is.toString().length());
-			BitmapFactory.Options options = new BitmapFactory.Options();
+			BitmapFactory.Options options = new BitmapFactory.Options();//避免内存溢出
 			options.inPreferredConfig = Config.RGB_565;
-			options.inPurgeable = true;
+			options.inPurgeable = true; //能被释放
 			options.inInputShareable = true;
-			options.inSampleSize = 1;
+			options.inSampleSize = 1; 
 			Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
 			return new BitmapDrawable(bitmap);
 		} catch (Exception e) {

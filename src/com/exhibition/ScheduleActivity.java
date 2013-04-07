@@ -75,8 +75,7 @@ public class ScheduleActivity extends Activity implements ActivityInterface,
 				switch (v.getId()) {
 				case R.id.home_button:
 					goToHomePage();
-					break;
-
+					break;  
 				default:
 					break;
 				}
@@ -140,6 +139,7 @@ public class ScheduleActivity extends Activity implements ActivityInterface,
 		default:
 			break;
 		}
+		
 	}
 
 	private void goToHomePage() {

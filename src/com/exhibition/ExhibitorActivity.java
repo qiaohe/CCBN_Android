@@ -41,6 +41,7 @@ public class ExhibitorActivity extends Activity implements
 
 	@SuppressWarnings("unchecked")
 	private void initData() {
+		//getExtras返回一个Map数据
 		mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");
 		titleStr = getIntent().getStringExtra("title");
 	}
@@ -80,11 +81,13 @@ public class ExhibitorActivity extends Activity implements
 		startActivity(it);
 		finish();
 	}
-
+	
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
-		
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent it = new Intent(ExhibitorActivity.this, ExhibitorDetailActivity.class);
+		it.putExtra("exhibitor", mExhibitors.get(position));  
+		startActivity(it);  
 	}
 	
 }

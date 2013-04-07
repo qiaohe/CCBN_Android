@@ -1,5 +1,8 @@
 package com.exhibition;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +39,8 @@ import com.exhibition.utils.DataUtil;
 import com.google.gson.Gson;
 
 public class WelcomActivity extends Activity implements ActivityInterface {
-	private EventData mEventDataOld, mEventDataNew;
+	private EventData mEventDataOld;   //本地的数据
+	private EventData mEventDataNew;   //新的网络数据
 	private TextView dateChTextView, dateEnTextView;
 	private TextView adsChTextView, adsEnTextView;
 	private Context context;
@@ -65,6 +69,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		findView();
 		
 		mLogo.setBackgroundResource(R.anim.logo_anim);
+		//AnimationDrawable逐帧动画类
 		mAnimationDrawable = (AnimationDrawable) mLogo.getBackground();
 		mLogo.post(new Runnable() {
 
@@ -98,15 +103,14 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 									.getKeyStringValue(
 											StringPools.CCBN_ALL_DATA, ""),
 							EventData.class);
-					if (mEventDataNew == null
+					if (mEventDataNew != null
 							|| !mEventDataOld.getUpdatedAt().equals(
 									mEventDataNew.getUpdatedAt())) {
 						mJsonData = controller.getService().findAll();
 
 						XmlDB.getInstance(WelcomActivity.this).saveKey(
 								StringPools.CCBN_ALL_DATA, mJsonData);
-					}
-
+					}   
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
@@ -192,6 +196,13 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			// 经纬度所对应的位置
 			sb.append(result.strAddr).append("/n");
 			addressStr = sb.toString();
+			try {
+				addressStr = new String(addressStr.getBytes(),"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			mCheckInData.address = addressStr;
 			System.out.println(addressStr);
 			goToNextPage();

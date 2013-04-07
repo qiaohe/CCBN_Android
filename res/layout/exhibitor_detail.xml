@@ -1,7 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/app_bg">
     
+     <RelativeLayout
+        android:id="@+id/exhibitor_detail_titlebar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/title_bar">
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/exhibitor_detail_home_button"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/home_btn_bg" />
+        
+        <TextView
+            android:id="@+id/exhibitor_detail_div_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/exhibitor_detail_home_button"
+            android:background="@drawable/dividing_line"/>
+
+        <TextView
+            android:id="@+id/exhibitor_detail_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/exhibitor_detail_div_line"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@android:color/white">
+    	
+        <TextView
+            android:padding="15dp" 
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textSize="17sp"
+        	android:textStyle="bold"
+    		android:id="@+id/exhibitor_detail_tv_one"/>
+        <ImageView  
+            android:layout_alignParentRight="true"
+            android:paddingLeft="5dp"
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/label_unfocus"
+    		android:id="@+id/exhibitor_detail_im_favorite"/>
+        
+        <TextView
+            android:layout_below="@id/exhibitor_detail_im_favorite"
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/cutline"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@android:color/white">
+    	
+        <TextView              
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textSize="17sp"
+        	android:textStyle="bold"
+        	android:padding="15dp"
+    		android:id="@+id/exhibitor_detail_tv_two"/>
+        
+        <TextView
+            android:layout_below="@id/exhibitor_detail_tv_two"
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/cutline"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:background="@android:color/white"> 
+        <ScrollView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+	        <TextView
+	            android:padding="15dp"
+	            android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textSize="17sp"
+        		android:textStyle="bold" 
+	    		android:id="@+id/exhibitor_detail_tv_three"/>
+        </ScrollView>
+      
+    </RelativeLayout>
+
+</LinearLayout>

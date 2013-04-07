@@ -136,6 +136,10 @@ public class EventData implements Serializable{
 		private String company;
 		/**展位*/
 		private String location;
+		private String address;  //地址
+		private String phone;  //电话
+		private String website;     //邮箱
+		private String description;  //介绍
 		public String getCompany() {
 			return company;
 		}
@@ -148,6 +152,33 @@ public class EventData implements Serializable{
 		public void setLocation(String location) {
 			this.location = location;
 		}
+		public String getAddress() {
+			return address;
+		}
+		public void setAddress(String address) {
+			this.address = address;
+		}
+		public String getPhone() {
+			return phone;
+		}
+		public void setPhone(String phone) {
+			this.phone = phone;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		public String getWebsite() {
+			return website;
+		}
+		public void setWebsite(String website) {
+			this.website = website;
+		}
+		
+		
 		
 	}
 	/**会展日程实体*/

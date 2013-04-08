@@ -22,10 +22,10 @@ public class SocketService extends IntentService {
 	private MobileConfig mMobileConfig;
 	private Gson gson;
 	private ClientController controller;
-	private double latitude;	//纬度
-	private double longitude;	//经度
-	private String address = "";	//地址
-	private ClientService service;
+	private double latitude;	
+	private double longitude;	
+	private String address = "";	
+	private ClientService clientService;
 	public SocketService(String name) {
 		super(name);
 	}
@@ -44,7 +44,7 @@ public class SocketService extends IntentService {
 			data.setMacAddress(mMobileConfig.getLocalMacAddress());
 			data.setAppCode("CCBN");
 			String startupMessage = gson.toJson(data);
-			client.send(startupMessage, "10.94.6.111", 8888);//本地服务器
+			client.send(startupMessage, "10.94.5.71", 8888);//本地服务器
 			//flag = false;
 			System.out.println("----------------clientStart-----------------");
 		}
@@ -55,7 +55,7 @@ public class SocketService extends IntentService {
 			if (!XmlDB.getInstance(this)
 					.getKeyStringValue(StringPools.mServiceToken, "")
 					.equals(""))
-				service.registService(
+				clientService.registService(
 						XmlDB.getInstance(this).getKeyStringValue(
 								StringPools.mServiceToken, ""), "CCBN",
 						"ANDROID");
@@ -72,7 +72,7 @@ public class SocketService extends IntentService {
 			System.out.println("21312321312312321"
 					+ XmlDB.getInstance(this).getKeyStringValue(
 							StringPools.mServiceToken, ""));
-			service.checkIn(
+			clientService.checkIn(
 							XmlDB.getInstance(this).getKeyStringValue(
 									StringPools.mServiceToken, ""),
 							"CCBN", latitude,longitude, address);
@@ -87,7 +87,7 @@ public class SocketService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		//listController =(ArrayList<ClientController>) intent.getExtras().get("listController");
 		//controller = new ClientController();
-		 service =  new ClientServiceImplForNet(
+		clientService =  new ClientServiceImplForNet(
 										ClientContext.createClientContext());
 		latitude = intent.getDoubleExtra("latitude", 0.0);
 		longitude = intent.getDoubleExtra("longitude", 0.0);

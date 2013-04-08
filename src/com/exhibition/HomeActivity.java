@@ -171,6 +171,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	@Override
 	public void onMessageReceived(MessageEvent e) {
 		System.out.println("2131312321321313131321======================"+e.getMessage());
+
 		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");
 	}
 	

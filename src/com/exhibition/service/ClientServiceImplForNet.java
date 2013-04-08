@@ -53,8 +53,8 @@ public class ClientServiceImplForNet implements ClientService {
 	@Override
 	public void checkIn(String serviceToken, String exhibitionCode, double latitude,
 			double longitude, String address) throws Exception {
-		final String url = "http://" + serverIP + ":" + serverPort
-		+ "/exhibition/api/attendees/check_in";
+		final String url = "http://" + serverIP + ":" + serverPort+ 
+							"/exhibition/api/attendees/check_in";
 		// 准备数据
 		NameValuePair param1 = new BasicNameValuePair("serviceToken", serviceToken);
 		NameValuePair param2 = new BasicNameValuePair("exhibitionCode", exhibitionCode);
@@ -167,7 +167,7 @@ public class ClientServiceImplForNet implements ClientService {
 
 	public String registService(String serviceToken, String exhibitionCode,
 			String mobilePlatform) throws Exception {
-		final String url = "http://" + serverIP + "/exhibition/api/attendees";
+		final String url = "http://" + serverIP + ":" + serverPort + "/exhibition/api/attendees";
 		ClientServiceToken mClientServiceToken = new ClientServiceToken();
 		mClientServiceToken.setServiceToken(serviceToken);
 		mClientServiceToken.setExhibitionCode(exhibitionCode);

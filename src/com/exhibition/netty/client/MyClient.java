@@ -1,7 +1,7 @@
 package com.exhibition.netty.client;
 
 import java.io.Serializable;
-import java.net.InetSocketAddress;
+import java.net.InetSocketAddress; 
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -28,8 +28,7 @@ public class MyClient {
 	public MyClient() {
         bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors
-                .newCachedThreadPool()));
-
+                .newCachedThreadPool()));   
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() throws Exception {
@@ -42,26 +41,33 @@ public class MyClient {
             }
         });
         
-        bootstrap.setOption("tcpNoDelay", true);  //����ѡ�
+        bootstrap.setOption("tcpNoDelay", true); //设置选项集
         bootstrap.setOption("keepAlive", true);
     }
 	
 	/**
-	 * ����socket����
-	 * @param host ��ַ
-	 * @param poot �˿ں�
-	 * @return
+	 * 建立socket连接
+-	 * @param host 地址
+-	 * @param poot 端口号
 	 */
 	
     private ChannelFuture getChannelFuture(final String host,final int poot) {
-        ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(host, poot));
+    	
+    	try{
+    		ChannelFuture channelFuture  = bootstrap.connect(new InetSocketAddress(host, poot));
+    		channelFuture.awaitUninterruptibly();
+    		if (!channelFuture.isSuccess()) {  
+                channelFuture.getChannel().getCloseFuture().awaitUninterruptibly();
+                return null;
+            }
+    		return channelFuture;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
         
-        channelFuture.awaitUninterruptibly();//�ȴ��future���.�÷����Ჶ׽InterruptedException����������
-        if (!channelFuture.isSuccess()) {
-            channelFuture.getChannel().getCloseFuture().awaitUninterruptibly();
-            return null;
-        }
-        return channelFuture;
+        
+        
     }
 
     public void send(final String jSonMessage,final String host,final int poot) {

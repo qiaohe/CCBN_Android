@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -118,7 +119,20 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 				}
 			};
 		}.start();
-
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+					registSevice();  
+				} catch (InterruptedException e) { 
+					e.printStackTrace();
+				}  
+				checkIn();  
+			}
+		}).start();
 	}
 
 	@Override
@@ -133,9 +147,6 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 	private void goToNextPage() {
 		Intent it = new Intent(WelcomActivity.this, HomeActivity.class);
-		it.putExtra("latitude", mCheckInData.latitude);
-		it.putExtra("longitude", mCheckInData.longitude);
-		it.putExtra("address", mCheckInData.address);
 		startActivity(it);
 		finish();
 	}
@@ -148,6 +159,45 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 				(int) (locData.longitude * 1E6)));
 	}
 
+	/**
+	 * 注册
+	 */
+	private void registSevice() {
+		try {
+			if (!XmlDB.getInstance(this)
+					.getKeyStringValue(StringPools.mServiceToken, "")
+					.equals(""))
+				controller.getService().registService(
+						XmlDB.getInstance(this).getKeyStringValue(
+								StringPools.mServiceToken, ""), "CCBN",
+						"ANDROID");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 签到
+	 */
+	private void checkIn() {
+		try {
+			System.out.println("21312321312312321"
+					+ XmlDB.getInstance(this).getKeyStringValue(
+							StringPools.mServiceToken, ""));
+			controller.getService().checkIn(
+							XmlDB.getInstance(this).getKeyStringValue(
+									StringPools.mServiceToken, ""),
+							"CCBN",
+							mCheckInData.latitude,
+							mCheckInData.longitude, 
+							mCheckInData.address);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 监听函数，又新位置的时候，格式化成字符串，输出到屏幕中
 	 */

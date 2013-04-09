@@ -124,7 +124,7 @@ public class CustomerHttpClient {
 		HttpResponse response;
 
 		try {
-		HttpPost post = new HttpPost(url);
+ 		HttpPost post = new HttpPost(url);
 		StringEntity se = new StringEntity(jSonData);
 		se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 		//se.setContentEncoding("UTF-8");

@@ -1,6 +1,5 @@
 package com.exhibition;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +8,7 @@ import java.util.Map;
 import org.jboss.netty.channel.MessageEvent;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Resources.NotFoundException;
+import android.content.Intent; 
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,39 +17,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.LocationData;
-import com.baidu.mapapi.search.MKAddrInfo;
-import com.baidu.mapapi.search.MKBusLineResult;
-import com.baidu.mapapi.search.MKDrivingRouteResult;
-import com.baidu.mapapi.search.MKPoiResult;
-import com.baidu.mapapi.search.MKSearch;
-import com.baidu.mapapi.search.MKSearchListener;
-import com.baidu.mapapi.search.MKSuggestionResult;
-import com.baidu.mapapi.search.MKTransitRouteResult;
-import com.baidu.mapapi.search.MKWalkingRouteResult;
-import com.baidu.platform.comapi.basestruct.GeoPoint;
-import com.exhibition.conts.StringPools;
-import com.exhibition.db.XmlDB;
-import com.exhibition.entities.CheckInData;
 import com.exhibition.entities.EventData;
 import com.exhibition.entities.EventData.EventSchedule;
 import com.exhibition.entities.EventData.Exhibitor;
 import com.exhibition.entities.EventData.Speaker;
 import com.exhibition.interfaces.ActivityInterface;
-import com.exhibition.netty.client.ClientData;
-import com.exhibition.netty.client.MyClient;
 import com.exhibition.netty.client.MyClient.MessageListener;
 import com.exhibition.service.ClientController;
 import com.exhibition.service.SocketService;
 import com.exhibition.utils.DataUtil;
-import com.exhibition.utils.MobileConfig;
 import com.exhibition.utils.NotificationUtil;
-import com.google.gson.Gson;
 
 public class HomeActivity extends Activity implements ActivityInterface,
 		OnItemClickListener,MessageListener {
@@ -66,7 +41,6 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图" };   
 	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();  
 	private ClientController controller; 
-	private ArrayList<ClientController>  listController = new ArrayList<ClientController>();
 	private double latitude;
 	private double longitude;
 	private String address = "";
@@ -81,14 +55,6 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		findView();
 		addAction();
 		
-		
-		//打开socket连接服务(包括签到)
-		Intent intent = new Intent(this,SocketService.class);
-		//intent.putExtra("listController", listController);
-		intent.putExtra("latitude", latitude);
-		intent.putExtra("longitude",longitude);
-		intent.putExtra("address", address);
-		startService(intent);
 	}
 
 	private void initData() {
@@ -97,10 +63,9 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		mExhibitors = DataUtil.getExhibitors(this);
 		mSpeakers = DataUtil.getSpeakers(this); 
 		controller = ClientController.getController(this);
-		//listController.add(controller);
-		latitude = getIntent().getDoubleExtra("latitude", 0.0);
+		/*latitude = getIntent().getDoubleExtra("latitude", 0.0);
 		longitude = getIntent().getDoubleExtra("longitude", 0.0);
-		address = getIntent().getStringExtra("address");
+		address = getIntent().getStringExtra("address");*/
 	}
 
 	@Override
@@ -155,7 +120,10 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
-		case 4: 
+		case 4:
+			//打开socket连接服务
+			Intent intent = new Intent(this,SocketService.class);
+			startService(intent);
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
 			startActivity(it);
 			break;
@@ -171,8 +139,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	@Override
 	public void onMessageReceived(MessageEvent e) {
 		System.out.println("2131312321321313131321======================"+e.getMessage());
-
 		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");
+		
 	}
 	
 	

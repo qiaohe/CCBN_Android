@@ -15,6 +15,8 @@ import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 public class MyClient {
@@ -25,7 +27,7 @@ public class MyClient {
         public void onMessageReceived(MessageEvent e);
     }
 	
-	public MyClient() {
+	public MyClient(Context context) {
         bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors
                 .newCachedThreadPool()));   
@@ -49,8 +51,7 @@ public class MyClient {
 	 * 建立socket连接
 -	 * @param host 地址
 -	 * @param poot 端口号
-	 */
-	
+	 */ 
     private ChannelFuture getChannelFuture(final String host,final int poot) {
     	
     	try{
@@ -66,12 +67,9 @@ public class MyClient {
     		return null;
     	}
         
-        
-        
     }
 
-    public void send(final String jSonMessage,final String host,final int poot) {
-       
+    public void send(final String jSonMessage,final String host,final int poot) { 
     	
         ChannelFuture future = getChannelFuture(host,poot);		//һ��ͨ�����첽 I/O�������
         if (future != null) {

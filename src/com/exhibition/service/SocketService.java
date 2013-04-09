@@ -26,7 +26,7 @@ public class SocketService extends IntentService {
 	private void linkSevice() {
 		/*if (XmlDB.getInstance(this)
 				.getKeyStringValue(StringPools.mServiceToken, "").equals("")) {*/
-			MyClient client = new MyClient();
+			MyClient client = new MyClient(getApplicationContext());
 			ClientData data = new ClientData();
 			mMobileConfig = MobileConfig.getMobileConfig(this);
 			gson = new Gson();	
@@ -36,8 +36,7 @@ public class SocketService extends IntentService {
 			String startupMessage = gson.toJson(data);
 			client.send(startupMessage, "10.94.5.71", 8888);//本地服务器
 			//flag = false;
-			System.out.println("----------------clientStart-----------------");
-		
+			System.out.println("----------------clientStart-----------------"); 
 	}
 	
 	

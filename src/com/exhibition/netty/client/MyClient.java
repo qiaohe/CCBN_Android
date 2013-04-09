@@ -1,6 +1,5 @@
 package com.exhibition.netty.client;
 
-import java.io.Serializable;
 import java.net.InetSocketAddress; 
 import java.util.concurrent.Executors;
 
@@ -17,18 +16,16 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
 
 public class MyClient {
-	//һ�������ͻ���ͨ���ͳ������ӵİ�����.
-	private ClientBootstrap bootstrap;
 	
+	private ClientBootstrap bootstrap;
+	//private Context context;
 	public interface MessageListener {
         public void onMessageReceived(MessageEvent e);
     }
-	
-	public MyClient(Context context) {
-        bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
+	public MyClient() {
+		bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors
                 .newCachedThreadPool()));   
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
@@ -45,6 +42,26 @@ public class MyClient {
         
         bootstrap.setOption("tcpNoDelay", true); //设置选项集
         bootstrap.setOption("keepAlive", true);
+	}
+	public MyClient(final Context context) {
+		bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
+                Executors.newCachedThreadPool(), Executors
+                .newCachedThreadPool()));   
+        bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+            @Override
+            public ChannelPipeline getPipeline() throws Exception {
+                ChannelPipeline result = new DefaultChannelPipeline();
+                
+                result.addLast("encode", new StringEncoder());//���Ӵ�����
+                result.addLast("decode", new StringDecoder());
+                result.addLast("handler", new ClientHandler(context));
+                return result;
+            }
+        });
+        
+        bootstrap.setOption("tcpNoDelay", true); //设置选项集
+        bootstrap.setOption("keepAlive", true);
+        
     }
 	
 	/**

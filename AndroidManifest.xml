@@ -79,13 +79,15 @@
             android:screenOrientation="portrait" >
             
         </activity> 
-        
+         <activity android:name=".MessageActivity" />
+       	  
         <service android:name="com.baidu.location.f" android:enabled="true"
 			android:process=":remote">
 		</service>
 		<service android:name="com.exhibition.service.SocketService" android:enabled="true"
 			>
 		</service>
+		<receiver android:name="com.exhibition.reciver.MessageReciver"/>
     </application>
 	
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />

@@ -37,8 +37,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private ArrayList<Speaker> mSpeakers = new ArrayList<EventData.Speaker>();
 	private int[] itemImgs = { R.drawable.schedule, R.drawable.exhibitors,
 			R.drawable.speakers, R.drawable.about, R.drawable.setting,
-			R.drawable.maps };  
-	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图" };   
+			R.drawable.maps, R.drawable.message};  
+	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图","消息" };   
 	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();  
 	private ClientController controller; 
 	private double latitude;
@@ -54,7 +54,16 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		initData();
 		findView();
 		addAction();
-		
+		socketLink(); 
+	}
+
+	private void socketLink() {
+		//打开socket连接服务
+		Intent intent = new Intent(this,SocketService.class);
+		intent.putExtra("latitude", latitude);
+		intent.putExtra("longitude", longitude);
+		intent.putExtra("address", address);
+		startService(intent);
 	}
 
 	private void initData() {
@@ -63,11 +72,10 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		mExhibitors = DataUtil.getExhibitors(this);
 		mSpeakers = DataUtil.getSpeakers(this); 
 		controller = ClientController.getController(this);
-		/*latitude = getIntent().getDoubleExtra("latitude", 0.0);
+		latitude = getIntent().getDoubleExtra("latitude", 0.0);
 		longitude = getIntent().getDoubleExtra("longitude", 0.0);
-		address = getIntent().getStringExtra("address");*/
-	}
-
+		address = getIntent().getStringExtra("address");
+	}   
 	@Override
 	public void findView() {
 		mGridView = (GridView) findViewById(R.id.home_gridview);
@@ -121,14 +129,15 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			startActivity(it);
 			break;
 		case 4:
-			//打开socket连接服务
-			Intent intent = new Intent(this,SocketService.class);
-			startService(intent);
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
 			startActivity(it);
 			break;
 		case 5:
 			it = new Intent(HomeActivity.this, MapActivity.class);
+			startActivity(it);
+			break;
+		case 6:
+			it = new Intent(HomeActivity.this, MessageActivity.class);
 			startActivity(it);
 			break;
 		}

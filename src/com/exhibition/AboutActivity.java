@@ -1,6 +1,5 @@
 package com.exhibition;
 
-import com.exhibition.entities.EventData;
 import com.exhibition.interfaces.ActivityInterface;
 
 import android.app.Activity;

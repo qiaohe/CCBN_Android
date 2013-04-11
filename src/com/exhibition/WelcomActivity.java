@@ -1,18 +1,14 @@
 package com.exhibition;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -39,19 +35,15 @@ import com.exhibition.service.ClientController;
 import com.exhibition.utils.DataUtil;
 import com.google.gson.Gson;
 
+
 public class WelcomActivity extends Activity implements ActivityInterface {
 	private EventData mEventDataOld;   //本地的数据
 	private EventData mEventDataNew;   //新的网络数据
-	private TextView dateChTextView, dateEnTextView;
-	private TextView adsChTextView, adsEnTextView;
 	private Context context;
 	private ImageView mLogo;
 	private AnimationDrawable mAnimationDrawable;
 	private ClientController controller;
 	private String mJsonData;
-	private DemoApplication app;
-	private TelephonyManager phoneManager;
-	private boolean flag = true;
 	private LocationData locData = new LocationData();
 	private LocationClient mLocationClient;
 	private BMapManager mBMapManagerNew;
@@ -93,9 +85,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(1000);
 		mLocationClient.setLocOption(option);
-		mLocationClient.start();
-
-		
+		mLocationClient.start();   	
 		new Thread() {
 			public void run() {
 				try {
@@ -104,7 +94,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 									.getKeyStringValue(
 											StringPools.CCBN_ALL_DATA, ""),
 							EventData.class);
-					if (mEventDataNew != null
+					if (mEventDataNew == null
 							|| !mEventDataOld.getUpdatedAt().equals(
 									mEventDataNew.getUpdatedAt())) {
 						mJsonData = controller.getService().findAll();
@@ -280,4 +270,5 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 		}
 	}
+	
 }

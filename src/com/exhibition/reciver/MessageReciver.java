@@ -26,13 +26,14 @@ public class MessageReciver extends BroadcastReceiver {
 	private String address = "";
 	@Override
 	public void onReceive(Context context, Intent intent) {
-Log.i("data", "reciver success");
+
 		this.context = context;
 		ClientContext clientContext = ClientContext.createClientContext();
 		clientService = new ClientServiceImplForNet(clientContext);
 		latitude = intent.getDoubleExtra("latitude", 0.0);
 		longitude = intent.getDoubleExtra("longitude", 0.0);
 		address = intent.getStringExtra("address");
+Log.i("data", "reciver: " + latitude + "  " + longitude + " " + address);
 		new Thread(new Runnable() {
 			
 			@Override

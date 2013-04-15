@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
@@ -23,6 +24,7 @@ import com.exhibition.MessageActivity;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.reciver.MessageReciver;
+import com.exhibition.service.SocketService;
 import com.exhibition.utils.NotificationUtil;
 import com.exhibition.utils.Resources;
 
@@ -36,6 +38,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 	private Intent intent = new Intent();
 	private boolean isCheckin = false;
 	private String recivedMessage; 
+	
 	public ClientHandler(Context context) {
 		this.context = context;
 	}
@@ -48,7 +51,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 	 */
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		recivedMessage = e.getMessage().toString();  
+		recivedMessage = e.getMessage().toString();
 		if (!e.getMessage().equals(null) && !e.getMessage().equals("")) {
 			try {
 				XmlDB.getInstance(context).saveKey(StringPools.mServiceToken,recivedMessage);
@@ -69,9 +72,13 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 			notification.setLatestEventInfo(context, "推送的消息", recivedMessage, pendingIntent);	//通知列表里的显示情况
 			NotificationManager noManager = (NotificationManager) context.getSystemService(
 								Context.NOTIFICATION_SERVICE);
+			notification.defaults = Notification.DEFAULT_SOUND;
 			noManager.notify(110, notification);
 		}else{
 			intent = new Intent(context,MessageReciver.class);
+			intent.putExtra("latitude", Resources.latitude);
+			intent.putExtra("longitude", Resources.longitude);
+			intent.putExtra("address", Resources.address);
 			context.sendBroadcast(intent);
 			isCheckin = true;
 		}
@@ -94,7 +101,15 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
-	}
-
+	}   
 	
+	@Override
+	public void channelDisconnected(ChannelHandlerContext ctx,
+			ChannelStateEvent e) throws Exception {
+		super.channelDisconnected(ctx, e);
+Log.i("data","reconnect");
+		/*Intent intent = new Intent(context,SocketService.class);
+		context.startService(intent);*/
+
+	}
 }

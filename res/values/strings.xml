@@ -3,5 +3,9 @@
     <string name="app_name">CCBN</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-
+	<string name="update">更新</string>
+	<string name="change_font">修改字体</string>
+	<string name="config">设置</string>
+	<string name="map">地图</string>
+	<string name="message">消息</string>
 </resources>

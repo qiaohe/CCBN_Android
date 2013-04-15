@@ -33,6 +33,7 @@ import com.exhibition.entities.EventData;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.service.ClientController;
 import com.exhibition.utils.DataUtil;
+import com.exhibition.utils.Resources;
 import com.google.gson.Gson;
 
 
@@ -125,9 +126,9 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 	private void goToNextPage() {
 		Intent intent = new Intent(WelcomActivity.this, HomeActivity.class);
-		intent.putExtra("latitude", mCheckInData.latitude);
-		intent.putExtra("longitude", mCheckInData.longitude);
-		intent.putExtra("address", mCheckInData.address);
+		Resources.latitude = mCheckInData.latitude;
+		Resources.longitude = mCheckInData.longitude;
+		Resources.address = mCheckInData.address;
 		startActivity(intent);
 		finish();
 	}

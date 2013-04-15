@@ -27,7 +27,7 @@
             android:background="@drawable/dividing_line"/>
 
         <TextView
-            android:id="@+id/title_text"
+            android:id="@+id/title_text_second"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginLeft="10dp"

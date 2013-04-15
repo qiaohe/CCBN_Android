@@ -10,11 +10,15 @@
         android:layout_height="wrap_content"
         layout="@layout/title_bar_second" />
 
-    <ListView 
+    <Button 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activity_config_listview">      
-        
-    </ListView>
+        android:text="@string/update"
+        android:id="@+id/activity_config_bt_update"/>
+    <Button 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_font"
+        android:id="@+id/activity_config_bt_changefont"/>
 
 </LinearLayout>

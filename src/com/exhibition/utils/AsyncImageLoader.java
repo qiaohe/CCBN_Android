@@ -65,8 +65,7 @@ public class AsyncImageLoader {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	} 
-
+	}   
 	public interface ImageCallback {
 		public void imageLoaded(Drawable imageDrawable);
 	}

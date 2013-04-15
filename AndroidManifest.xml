@@ -79,8 +79,10 @@
             android:screenOrientation="portrait" >
             
         </activity> 
-         <activity android:name=".MessageActivity" />
-       	  
+        <activity android:name=".MessageActivity" />
+       	<activity android:name=".VideoActivity" />
+       	<activity android:name=".TrafficActivity" />
+       	<activity android:name=".RestaurantActivity" />  
         <service android:name="com.baidu.location.f" android:enabled="true"
 			android:process=":remote">
 		</service>

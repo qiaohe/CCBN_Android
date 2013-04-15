@@ -11,10 +11,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.exhibition.conts.StringPools;
-import com.exhibition.entities.EventData;
+import android.widget.TextView;  
+import com.exhibition.conts.StringPools;  
 import com.exhibition.entities.EventData.Speaker;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.utils.DataUtil;

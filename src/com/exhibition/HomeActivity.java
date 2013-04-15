@@ -37,13 +37,12 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private ArrayList<Speaker> mSpeakers = new ArrayList<EventData.Speaker>();
 	private int[] itemImgs = { R.drawable.schedule, R.drawable.exhibitors,
 			R.drawable.speakers, R.drawable.about, R.drawable.setting,
-			R.drawable.maps, R.drawable.message};  
-	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", "设置", "地图","消息" };   
+			R.drawable.maps, R.drawable.message,R.drawable.video,
+			R.drawable.traffic,R.drawable.restaurant};  
+	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", 
+				"设置", "地图","消息","视频","餐饮","交通" };   
 	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();  
 	private ClientController controller; 
-	private double latitude;
-	private double longitude;
-	private String address = "";
 	private boolean flag = true;
 
 	@Override
@@ -60,9 +59,6 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private void socketLink() {
 		//打开socket连接服务
 		Intent intent = new Intent(this,SocketService.class);
-		intent.putExtra("latitude", latitude);
-		intent.putExtra("longitude", longitude);
-		intent.putExtra("address", address);
 		startService(intent);
 	}
 
@@ -72,10 +68,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		mExhibitors = DataUtil.getExhibitors(this);
 		mSpeakers = DataUtil.getSpeakers(this); 
 		controller = ClientController.getController(this);
-		latitude = getIntent().getDoubleExtra("latitude", 0.0);
-		longitude = getIntent().getDoubleExtra("longitude", 0.0);
-		address = getIntent().getStringExtra("address");
-	}   
+	}
+	
 	@Override
 	public void findView() {
 		mGridView = (GridView) findViewById(R.id.home_gridview);
@@ -130,14 +124,32 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			break;
 		case 4:
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
+			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
 		case 5:
 			it = new Intent(HomeActivity.this, MapActivity.class);
+			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
 		case 6:
 			it = new Intent(HomeActivity.this, MessageActivity.class);
+			it.putExtra("title", itemTexts[position]);
+			startActivity(it);
+			break;
+		case 7:
+			it = new Intent(HomeActivity.this, VideoActivity.class);
+			it.putExtra("title", itemTexts[position]);
+			startActivity(it);
+			break;
+		case 8:
+			it = new Intent(HomeActivity.this, TrafficActivity.class);
+			it.putExtra("title", itemTexts[position]);
+			startActivity(it);
+			break;
+		case 9:
+			it = new Intent(HomeActivity.this, RestaurantActivity.class);
+			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
 		}
@@ -148,8 +160,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	@Override
 	public void onMessageReceived(MessageEvent e) {
 		System.out.println("2131312321321313131321======================"+e.getMessage());
-		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");
-		
+		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");  
 	}
 	
 	

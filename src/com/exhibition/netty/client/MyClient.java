@@ -52,7 +52,7 @@ public class MyClient {
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline result = new DefaultChannelPipeline();
                 
-                result.addLast("encode", new StringEncoder());//���Ӵ�����
+                result.addLast("encode", new StringEncoder());
                 result.addLast("decode", new StringDecoder());
                 result.addLast("handler", new ClientHandler(context));
                 return result;
@@ -60,8 +60,7 @@ public class MyClient {
         });
         
         bootstrap.setOption("tcpNoDelay", true); //设置选项集
-        bootstrap.setOption("keepAlive", true);
-        
+        bootstrap.setOption("keepAlive", true); 
     }
 	
 	/**

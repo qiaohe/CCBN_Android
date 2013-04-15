@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 /**
  * 显示收到的所有消息列表窗体
@@ -19,6 +20,7 @@ import android.widget.SimpleAdapter;
 public class MessageActivity extends Activity {
 	private ListView lvMessage;
 	private Button btHome;
+	private TextView tvTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,5 +35,7 @@ public class MessageActivity extends Activity {
 				                               R.layout.listview_item,
 				                               new String[]{"timeAndContent"},
 				                               new int[]{R.id.item_text}));
+		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
+		tvTitle.setText(R.string.message);
 	}
 }

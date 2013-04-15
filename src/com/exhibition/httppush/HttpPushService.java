@@ -66,8 +66,7 @@ public class HttpPushService extends Service {
         super.onCreate();
     }
 
-    private void handleCommand(Intent intent) {
-    	
+    private void handleCommand(Intent intent) {  
         stopSelf();
     }
 

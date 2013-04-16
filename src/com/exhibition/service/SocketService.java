@@ -32,15 +32,12 @@ public class SocketService extends IntentService {
 			gson = new Gson();	
 			data.setMacAddress(mMobileConfig.getLocalMacAddress());
 			data.setAppCode("CCBN");
-			
 			String startupMessage = gson.toJson(data);
-			client.send(startupMessage, "10.94.5.71", 8888);//本地服务器
+			client.send(startupMessage, "180.168.35.37", 8888);//本地服务器
 			//flag = false;
 			System.out.println("----------------clientStart-----------------"); 
 	}
 	
-	
-
 	@Override
 	protected void onHandleIntent(Intent intent) {
 	

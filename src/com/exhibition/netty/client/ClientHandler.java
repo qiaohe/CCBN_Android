@@ -51,7 +51,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 	 */
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		recivedMessage = e.getMessage().toString();
+		recivedMessage = new String(e.getMessage().toString().getBytes(),"gb2312");
 		if (!e.getMessage().equals(null) && !e.getMessage().equals("")) {
 			try {
 				XmlDB.getInstance(context).saveKey(StringPools.mServiceToken,recivedMessage);

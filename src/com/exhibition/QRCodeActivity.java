@@ -1,6 +1,9 @@
 package com.exhibition;
 
+
 import com.exhibition.interfaces.ActivityInterface;
+import com.exhibition.listener.HomeClickListener;
+import com.exhibition.utils.ImageURLUtil;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class QRCodeActivity extends Activity implements ActivityInterface {
 	private EditText dtUsername;
@@ -19,20 +23,18 @@ public class QRCodeActivity extends Activity implements ActivityInterface {
 	private ImageView ivQrcode;
 	private String username;
 	private String password;
+	private TextView tvTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_qrcode);
 		findView();
-		initData();
+		username = dtUsername.getText().toString();
+		password = dtPassword.getText().toString();
 		addAction(); 
 	}
 	
-	public void initData(){
-		username = dtUsername.getText().toString();
-		password = dtPassword.getText().toString();
-	}
 	
 	@Override
 	public void findView() {
@@ -41,19 +43,24 @@ public class QRCodeActivity extends Activity implements ActivityInterface {
 		btHome = (Button) this.findViewById(R.id.home_button_second);
 		btLogin = (Button) this.findViewById(R.id.activity_qrcode_bt_login);
 		ivQrcode = (ImageView) this.findViewById(R.id.activity_qrcode_iv_qrcode);
+		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
 	}
 	
 	@Override
 	public void addAction() {
+		tvTitle.setText(getIntent().getStringExtra("title"));
+		btHome.setOnClickListener(new HomeClickListener(QRCodeActivity.this));
 		btLogin.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				
+				String url = "http://180.168.35.37:8080/exhibition/api/qrcode/get?login=" + username +
+						  "&password=" + password;
+				ImageURLUtil.loadImage(url, ivQrcode);
 			}
 		});
 		
 	}
+	
 	
 }

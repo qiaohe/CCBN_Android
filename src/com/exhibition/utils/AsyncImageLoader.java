@@ -54,7 +54,7 @@ public class AsyncImageLoader {
 		try {
 			URL url = new URL(imageUrl);
 			InputStream is = url.openStream();
-			System.out.println("" + is.toString().length());
+System.out.println("" + is.toString().length());
 			BitmapFactory.Options options = new BitmapFactory.Options();//避免内存溢出
 			options.inPreferredConfig = Config.RGB_565;
 			options.inPurgeable = true; //能被释放

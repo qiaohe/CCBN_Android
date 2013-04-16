@@ -13,7 +13,6 @@ public class StringPools {
 	/** 客户端保存设备唯一标识位的键值. */
 	public static final String mDeviceIdKey = "mDeviceIdKey";
 	/** 客户端图片下载URL. */
-	public static final String mClientPICURL = "http://180.168.35.37:8080/exhibition/upload/image/";
 	public static final String baiDuMapStrKey = "63541DA073C3E684B5815C6A1FB24599E42FF479";
 	public static final String mPushIntervalKey = "mPushInterval";
 	public static final String mServiceToken = "serviceToken";

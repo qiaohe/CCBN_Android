@@ -40,7 +40,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			R.drawable.maps, R.drawable.message,R.drawable.video,
 			R.drawable.traffic,R.drawable.restaurant};  
 	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", 
-				"设置", "地图","消息","视频","餐饮","交通" };   
+				"设置", "地图","消息","视频","二维码","交通" };   
 	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();  
 	private ClientController controller; 
 	private boolean flag = true;
@@ -83,8 +83,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 				(List<Map<String, Object>>) data,
 				R.layout.home_page_gridview_item, new String[] { "icon",
 						"title" }, new int[] { R.id.gridview_img,
-						R.id.gridview_text });
-
+						R.id.gridview_text }); 
 		mGridView.setAdapter(mGridViewAdapter);
 	}
  
@@ -125,17 +124,17 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		case 4:
 			it = new Intent(HomeActivity.this, ConfigActivity.class);
 			it.putExtra("title", itemTexts[position]);
-			startActivity(it);
+			startActivity(it);  
 			break;
 		case 5:
 			it = new Intent(HomeActivity.this, MapActivity.class);
 			it.putExtra("title", itemTexts[position]);
-			startActivity(it);
+			startActivity(it); 
 			break;
 		case 6:
 			it = new Intent(HomeActivity.this, MessageActivity.class);
 			it.putExtra("title", itemTexts[position]);
-			startActivity(it);
+			startActivity(it);  
 			break;
 		case 7:
 			it = new Intent(HomeActivity.this, VideoActivity.class);
@@ -143,12 +142,12 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			startActivity(it);
 			break;
 		case 8:
-			it = new Intent(HomeActivity.this, TrafficActivity.class);
+			it = new Intent(HomeActivity.this, QRCodeActivity.class);
 			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
 		case 9:
-			it = new Intent(HomeActivity.this, RestaurantActivity.class);
+			it = new Intent(HomeActivity.this, TrafficActivity.class);
 			it.putExtra("title", itemTexts[position]);
 			startActivity(it);
 			break;
@@ -162,6 +161,5 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		System.out.println("2131312321321313131321======================"+e.getMessage());
 		NotificationUtil.testNotification(this, getIntent(), "kakakakaka");  
 	}
-	
 	
 }

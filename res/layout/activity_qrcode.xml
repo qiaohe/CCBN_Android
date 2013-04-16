@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/app_bg">
+    
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/title_bar_second" />
+    
+	<TextView 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username"/>
+	<EditText 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_qrcode_et_username"/>
+    <TextView 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/password"/>
+	<EditText 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_qrcode_et_password"/>
+	<Button 
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/activity_qrcode_bt_login"/> 
+     <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_qrcode_iv_qrcode"/>   
+</LinearLayout>

@@ -82,7 +82,8 @@
         <activity android:name=".MessageActivity" />
        	<activity android:name=".VideoActivity" />
        	<activity android:name=".TrafficActivity" />
-       	<activity android:name=".RestaurantActivity" />  
+       	<activity android:name=".QRCodeActivity" />  
+       	<activity android:name=".TrafficItemActivity" />  
         <service android:name="com.baidu.location.f" android:enabled="true"
 			android:process=":remote">
 		</service>

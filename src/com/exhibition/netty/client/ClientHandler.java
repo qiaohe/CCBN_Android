@@ -51,7 +51,8 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 	 */
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		recivedMessage = new String(e.getMessage().toString().getBytes(),"gb2312");
+		
+		recivedMessage = e.getMessage().toString();
 		if (!e.getMessage().equals(null) && !e.getMessage().equals("")) {
 			try {
 				XmlDB.getInstance(context).saveKey(StringPools.mServiceToken,recivedMessage);
@@ -60,20 +61,22 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 			}  
 		}
 		e.getChannel().write("byte");
-		if(isCheckin){
+		if(isCheckin ){
 			addMessageToList();
 			Notification notification = new Notification(android.R.id.icon, 
 														 recivedMessage,
 														 System.currentTimeMillis());
-			intent = new Intent(context,MessageActivity.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(
-							context,0, intent, 0);
-			
-			notification.setLatestEventInfo(context, "推送的消息", recivedMessage, pendingIntent);	//通知列表里的显示情况
-			NotificationManager noManager = (NotificationManager) context.getSystemService(
-								Context.NOTIFICATION_SERVICE);
-			notification.defaults = Notification.DEFAULT_SOUND;
-			noManager.notify(110, notification);
+			if(!recivedMessage.equals(":[PING:PONG]")){
+				intent = new Intent(context,MessageActivity.class);
+				PendingIntent pendingIntent = PendingIntent.getActivity(
+								context,0, intent, 0);
+				
+				notification.setLatestEventInfo(context, "推送的消息", recivedMessage, pendingIntent);	//通知列表里的显示情况
+				NotificationManager noManager = (NotificationManager) context.getSystemService(
+									Context.NOTIFICATION_SERVICE);
+				notification.defaults = Notification.DEFAULT_SOUND;
+				noManager.notify(110, notification);
+			}
 		}else{
 			intent = new Intent(context,MessageReciver.class);
 			intent.putExtra("latitude", Resources.latitude);
@@ -86,16 +89,17 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 
 	
 	private void addMessageToList() {
-		Map<String,Object> map = new HashMap<String, Object>();
-		Calendar calendar  = Calendar.getInstance();
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		int minute = calendar.get(Calendar.MINUTE);
-		StringBuilder time = new StringBuilder();
-		time.append(hour + ":");
-		time.append(minute + "  ");
-		map.put("timeAndContent", time.toString() + "         " + recivedMessage);
-		Resources.messageMap.add(map);
-		
+		if(!recivedMessage.equals(":[PING:PONG]")){
+			Map<String,Object> map = new HashMap<String, Object>();
+			Calendar calendar  = Calendar.getInstance();
+			int hour = calendar.get(Calendar.HOUR_OF_DAY);
+			int minute = calendar.get(Calendar.MINUTE);
+			StringBuilder time = new StringBuilder();
+			time.append(hour + ":");
+			time.append(minute + "  ");
+			map.put("timeAndContent", time.toString() + "         " + recivedMessage);
+			Resources.messageMap.add(map);
+		}
 	}
 	
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)

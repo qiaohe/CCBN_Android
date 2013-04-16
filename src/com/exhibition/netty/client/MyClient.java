@@ -1,6 +1,7 @@
 package com.exhibition.netty.client;
 
 import java.net.InetSocketAddress; 
+import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -33,8 +34,8 @@ public class MyClient {
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline result = new DefaultChannelPipeline();
                 
-                result.addLast("encode", new StringEncoder());//���Ӵ�����
-                result.addLast("decode", new StringDecoder());
+                result.addLast("encode", new StringEncoder(Charset.forName("UTF-8")));
+                result.addLast("decode", new StringDecoder(Charset.forName("UTF-8")));
                 result.addLast("handler", new ClientHandler());
                 return result;
             }
@@ -57,8 +58,7 @@ public class MyClient {
                 result.addLast("handler", new ClientHandler(context));
                 return result;
             }
-        });
-        
+        });         
         bootstrap.setOption("tcpNoDelay", true); //设置选项集
         bootstrap.setOption("keepAlive", true); 
     }
@@ -87,7 +87,7 @@ public class MyClient {
 
     public void send(final String jSonMessage,final String host,final int poot) { 
     	
-        ChannelFuture future = getChannelFuture(host,poot);		//һ��ͨ�����첽 I/O�������
+        ChannelFuture future = getChannelFuture(host,poot);		
         if (future != null) {
             future.getChannel().write(jSonMessage);
         }

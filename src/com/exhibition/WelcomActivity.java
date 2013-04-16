@@ -65,8 +65,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		mLogo.setBackgroundResource(R.anim.logo_anim);
 		//AnimationDrawable逐帧动画类
 		mAnimationDrawable = (AnimationDrawable) mLogo.getBackground();
-		mLogo.post(new Runnable() {
-
+		mLogo.post(new Runnable() {  
 			public void run() {
 				mAnimationDrawable.start();
 			}
@@ -109,9 +108,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 					e.printStackTrace();
 				}
 			};
-		}.start();
-		
-		
+		}.start(); 
 	}
 
 	@Override

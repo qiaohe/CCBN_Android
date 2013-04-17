@@ -3,7 +3,6 @@ package com.exhibition.reciver;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.service.ClientContext;
-import com.exhibition.service.ClientController;
 import com.exhibition.service.ClientService;
 import com.exhibition.service.ClientServiceImplForNet;
 
@@ -58,10 +57,10 @@ Log.i("data", "reciver: " + latitude + "  " + longitude + " " + address);
 			if (!XmlDB.getInstance(context)
 					.getKeyStringValue(StringPools.mServiceToken, "")
 					.equals(""))
-				clientService.registService(
-						XmlDB.getInstance(context).getKeyStringValue(
-								StringPools.mServiceToken, ""), "CCBN",
-						"ANDROID");
+				clientService.registerService(
+                        XmlDB.getInstance(context).getKeyStringValue(
+                                StringPools.mServiceToken, ""), "CCBN",
+                        "ANDROID");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

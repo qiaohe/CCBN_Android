@@ -1,8 +1,5 @@
 package com.exhibition;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +8,14 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;  
-import com.exhibition.conts.StringPools;  
+import android.widget.TextView;
 import com.exhibition.entities.EventData.Speaker;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.utils.DataUtil;
 import com.exhibition.utils.ImageURLUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpeakerDetailActivity extends Activity implements
 		ActivityInterface {
@@ -69,7 +68,7 @@ public class SpeakerDetailActivity extends Activity implements
 			mSpeakerPhoto.setImageResource(R.drawable.default_avatar);
 		} else {
 			ImageURLUtil.loadImage(
-					StringPools.mClientPICURL + mSpeaker.getPhoto(),
+					AppConfig.URL_IMAGE_ROOT + mSpeaker.getPhoto(),
 					mSpeakerPhoto);
 		}
 		mSpeakerName.setText(mSpeaker.getName());

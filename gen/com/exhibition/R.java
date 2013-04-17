@@ -107,7 +107,7 @@ public final class R {
         public static final int activity_traffic_item_iv=0x7f090012;
         public static final int activity_traffic_item_tv=0x7f090013;
         public static final int activity_traffic_lv=0x7f090011;
-        public static final int activity_video_vv=0x7f090014;
+        public static final int activity_video_sv=0x7f090014;
         public static final int address_ch=0x7f090047;
         public static final int address_eg=0x7f090048;
         public static final int commodity_btn01=0x7f09001e;

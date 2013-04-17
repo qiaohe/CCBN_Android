@@ -53,7 +53,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 			throws Exception {
 		
 		recivedMessage = e.getMessage().toString();
-		if (!e.getMessage().equals(null) && !e.getMessage().equals("")) {
+		if (! (null == e.getMessage()) && !"".equals(e.getMessage())) {
 			try {
 				XmlDB.getInstance(context).saveKey(StringPools.mServiceToken,recivedMessage);
 			} catch (Exception ex) {
@@ -89,7 +89,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
 
 	
 	private void addMessageToList() {
-		if(!recivedMessage.equals(":[PING:PONG]")){
+		if(!(":[PING:PONG]".equals(recivedMessage))){
 			Map<String,Object> map = new HashMap<String, Object>();
 			Calendar calendar  = Calendar.getInstance();
 			int hour = calendar.get(Calendar.HOUR_OF_DAY);

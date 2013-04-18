@@ -15,8 +15,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
-
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;   
 import com.exhibition.entities.EventData;
 import com.exhibition.entities.EventData.EventSchedule;
 import com.exhibition.entities.EventData.Exhibitor;
@@ -29,7 +29,7 @@ import com.exhibition.utils.DataUtil;
 import com.exhibition.utils.NotificationUtil;
 
 public class HomeActivity extends Activity implements ActivityInterface,
-		OnItemClickListener,MessageListener {
+		OnItemClickListener,MessageListener { 
 	private GridView mGridView;
 	private EventData mEventData;
 	private ArrayList<EventSchedule> mEventSchedules = new ArrayList<EventData.EventSchedule>();
@@ -95,6 +95,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		
 		Intent it = new Intent();
 		switch (position) {
 		case 0:
@@ -153,7 +154,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			break;
 		}
 	}
-  
+
 	
 
 	@Override

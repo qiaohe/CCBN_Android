@@ -77,7 +77,7 @@ public class ExhibitorActivity extends Activity implements
 		mExhibitorListView.setOnItemClickListener(this);
 	}
 	private void goToHomePage() {
-		Intent it = new Intent(ExhibitorActivity.this, HomeActivity.class);
+		Intent it = new Intent(ExhibitorActivity.this, HomeActivity.class);  
 		startActivity(it);
 		finish();
 	}
@@ -86,7 +86,8 @@ public class ExhibitorActivity extends Activity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent it = new Intent(ExhibitorActivity.this, ExhibitorDetailActivity.class);
-		it.putExtra("exhibitor", mExhibitors.get(position));  
+		it.putExtra("exhibitor", mExhibitors.get(position));
+		it.putExtra("title", titleStr);
 		startActivity(it);  
 	}
 	

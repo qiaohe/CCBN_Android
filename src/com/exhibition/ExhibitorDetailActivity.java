@@ -2,6 +2,7 @@ package com.exhibition;
 
 import com.exhibition.entities.EventData.Exhibitor;
 import com.exhibition.interfaces.ActivityInterface;
+import com.exhibition.listener.HomeClickListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +19,9 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 	private TextView tvOne;
 	private TextView tvTwo;
 	private TextView tvThree;
-	private Button buttonBack;
+	private Button btHome;
+	private TextView tvTitle;
+	private String strTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 
 	private void initData() {
 		exhibitor = (Exhibitor) getIntent().getExtras().get("exhibitor");
+		strTitle = getIntent().getStringExtra("title");
 	}
 	
 	@Override
@@ -39,7 +43,8 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 		tvOne = (TextView) this.findViewById(R.id.exhibitor_detail_tv_one);
 		tvTwo = (TextView) this.findViewById(R.id.exhibitor_detail_tv_two);
 		tvThree = (TextView) this.findViewById(R.id.exhibitor_detail_tv_three);
-		buttonBack= (Button) this.findViewById(R.id.exhibitor_detail_home_button);
+		btHome = (Button) this.findViewById(R.id.home_button_second);
+		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
 	}
 
 	@Override
@@ -50,15 +55,8 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 					  "联系电话：" + exhibitor.getPhone() + "\n" + 
 				      "网       址：" + exhibitor.getWebsite());
 		tvThree.setText(exhibitor.getDescription());
-		buttonBack.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent it = new Intent(ExhibitorDetailActivity.this, HomeActivity.class);
-				startActivity(it);
-				finish();
-			}
-		});
+		tvTitle.setText(strTitle);
+		btHome.setOnClickListener(new HomeClickListener(ExhibitorDetailActivity.this));
 		
 	}  
 	

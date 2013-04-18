@@ -17,6 +17,7 @@ public class MyClient {
     private ClientBootstrap bootstrap;
 
     public MyClient() {
+    	this(null);
         bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors
                 .newCachedThreadPool()));

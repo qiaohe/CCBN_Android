@@ -1,11 +1,8 @@
 package com.exhibition.adapter;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
-
-import com.exhibition.R;
-
+import com.exhibition.R; 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -76,6 +76,7 @@ public class ExhibitorActivity extends Activity implements
 		
 		mExhibitorListView.setOnItemClickListener(this);
 	}
+	
 	private void goToHomePage() {
 		Intent it = new Intent(ExhibitorActivity.this, HomeActivity.class);  
 		startActivity(it);

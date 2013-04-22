@@ -77,10 +77,10 @@ Log.i("data", "reciver: " + latitude + "  " + longitude + " " + address);
 			clientService.checkIn(
 							XmlDB.getInstance(context).getKeyStringValue(
 									StringPools.mServiceToken, ""),
-							"CCBN",
-							latitude,
-							longitude, 
-							address);
+									"CCBN",
+									latitude,
+									longitude, 
+									address);
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

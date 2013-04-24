@@ -5,36 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jboss.netty.channel.MessageEvent;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent; 
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.GestureDetector.OnGestureListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;   
-import android.widget.ViewFlipper;
-
-import com.exhibition.entities.EventData;
-import com.exhibition.entities.EventData.EventSchedule;
-import com.exhibition.entities.EventData.Exhibitor;
-import com.exhibition.entities.EventData.Speaker;
+import android.widget.ViewFlipper;    
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.listener.GridviewOneClickListener;
-import com.exhibition.listener.GridviewTwoClickListener;
-import com.exhibition.netty.client.MyClient.MessageListener;
-import com.exhibition.service.ClientController;
+import com.exhibition.listener.GridviewTwoClickListener; 
 import com.exhibition.service.SocketService;
-import com.exhibition.utils.DataUtil;
-import com.exhibition.utils.NotificationUtil;
 
 public class HomeActivity extends Activity implements ActivityInterface,
 		OnGestureListener{ 
@@ -55,6 +45,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private GestureDetector geDetector;
 	private boolean nextORPrevours = true;   //ture 为next
 	private ImageView ivDianone,ivDiantwo;
+	private Intent serviceIntent;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,16 +54,16 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		initData();
 		findView();
 		addAction();
-		socketLink(); 
+		socketLink(); 		
 	}
 
 	private void socketLink() {
 		//打开socket连接服务
-		Intent intent = new Intent(this,SocketService.class);
-		startService(intent);
+		startService(serviceIntent);
 	}
 
-	private void initData() {   
+	private void initData() { 
+		serviceIntent = new Intent(this,SocketService.class);
 		for (int i = 0; i < itemImgs.length; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("icon", itemImgs[i]);
@@ -103,10 +94,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		gvTwo.setOnItemClickListener(new GridviewTwoClickListener(this,itemTexts2));
 		viewFlipper.addView(gvOne);
 		viewFlipper.addView(gvTwo);
-	}
-
+	}  
 	
-
 	private GridView createGridView(List<Map<String, Object>> data) {
 		GridView gridview = new GridView(HomeActivity.this){
 			@Override
@@ -129,52 +118,54 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	}
 
 	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
+	public boolean onDown(MotionEvent e) {  
 		return false;
 	}
 
 	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void onShowPress(MotionEvent e) {  
 	}
 
 	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
+	public boolean onSingleTapUp(MotionEvent e) { 
 		return false;
 	}
 
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		// TODO Auto-generated method stub
+			float distanceY) { 
 		return false;
 	}
 
 	@Override
 	public void onLongPress(MotionEvent e) {
-		
-		
-	}
-
+				
+	}  
+	
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		if(e2.getX() - e1.getX() > 0 && e2.getX() - e1.getX() > SLIP_DISTANCE ){
 			if(nextORPrevours){
+				//overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+				/*viewFlipper.setAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_left));
+				viewFlipper.setAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_right));*/
 				viewFlipper.showNext();
 				nextORPrevours = false;
 				ivDianone.setImageResource(R.drawable.page_indicator);
 				ivDiantwo.setImageResource(R.drawable.page_indicator_focused);
+				return true;
 			}
 		}else if(e1.getX() - e2.getX() > 0 && e1.getX() - e2.getX() > SLIP_DISTANCE){
 			if(!nextORPrevours){
+				//overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+				/*viewFlipper.setAnimation(AnimationUtils.loadAnimation(this,R.anim.out_to_right));
+				viewFlipper.setAnimation(AnimationUtils.loadAnimation(this,R.anim.in_from_left));*/
 				viewFlipper.showPrevious();
 				nextORPrevours = true;
 				ivDiantwo.setImageResource(R.drawable.page_indicator);
 				ivDianone.setImageResource(R.drawable.page_indicator_focused);
+				return true;
 			}
 		}
 		return true;
@@ -182,6 +173,34 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return geDetector.onTouchEvent(event);
+		geDetector.onTouchEvent(event);
+		return super.onTouchEvent(event);
+	}
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) { 
+		if(event.getAction() == KeyEvent.ACTION_DOWN &&
+				event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+			new AlertDialog.Builder(HomeActivity.this)
+			.setTitle("注意")
+			.setMessage("您确定要退出CCBN吗？")
+			.setPositiveButton("确定", new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					HomeActivity.this.stopService(serviceIntent);
+					finish();
+				}
+			})
+			.setNegativeButton("取消", new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			}).show();
+			return true;
+		}else{
+			return super.dispatchKeyEvent(event);
+		}
 	}
 }

@@ -6,6 +6,7 @@ import java.io.File;
 
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.listener.HomeClickListener;
+import com.hp.hpl.sparta.xpath.PositionEqualsExpr;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.SurfaceHolder.Callback;
 import android.widget.Button;
@@ -25,6 +27,7 @@ public class VideoActivity extends Activity implements ActivityInterface {
 	private TextView tvTitle;
 	private Button btHome;
 	private VideoView videoView;
+	private static int previousPosition = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +48,17 @@ public class VideoActivity extends Activity implements ActivityInterface {
 		btHome.setOnClickListener(new HomeClickListener(VideoActivity.this));
 		File file = new File(Environment.getExternalStorageDirectory(),"video.mp4") ;
 		videoView.setVideoPath(file.getAbsolutePath());
-		videoView.start();
-	}
+		videoView.seekTo(previousPosition);
+		videoView.start(); 
+	} 
 	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if(videoView.isPlaying()){
+			previousPosition = videoView.getCurrentPosition();
+		}else{
+			previousPosition = 0;
+		}
+	}
 }

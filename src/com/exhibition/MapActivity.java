@@ -1,5 +1,7 @@
 package com.exhibition;
 
+import java.util.Map;
+
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
@@ -8,7 +10,10 @@ import com.exhibition.conts.StringPools;
 import com.exhibition.listener.HomeClickListener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,7 +39,15 @@ public class MapActivity extends Activity {
 		mapController.setCenter(point);
 		mapController.setZoom(10);
 		btHome = (Button) this.findViewById(R.id.home_button_second);
-		btHome.setOnClickListener(new HomeClickListener(MapActivity.this));
+		btHome.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MapActivity.this,HomeActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
 		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
 		tvTitle.setText(R.string.map);
 	}

@@ -40,12 +40,11 @@ public class MyClient {
     public MyClient(final Context context) {
         bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors
-                .newCachedThreadPool()));
+                .newCachedThreadPool()));   
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() throws Exception {
-                ChannelPipeline result = new DefaultChannelPipeline();
-
+                ChannelPipeline result = new DefaultChannelPipeline();  
                 result.addLast("encode", new StringEncoder(Charset.forName("UTF-8")));
                 result.addLast("decode", new StringDecoder(Charset.forName("UTF-8")));
                 result.addLast("handler", new ClientHandler(context));
@@ -73,12 +72,10 @@ public class MyClient {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-
+        }  
     }
 
-    public void send(final String jSonMessage, final String host, final int poot) {
-
+    public void send(final String jSonMessage, final String host, final int poot) {  
         ChannelFuture future = getChannelFuture(host, poot);
         if (future != null) {
             future.getChannel().write(jSonMessage);

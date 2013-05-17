@@ -1,0 +1,86 @@
+#
+# An unexpected error has been detected by Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:2923), pid=3316, tid=3236
+#  Error: ShouldNotReachHere()
+#
+# Java VM: Java HotSpot(TM) Client VM (11.3-b02 mixed mode windows-x86)
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x01c39400):  JavaThread "Unknown thread" [_thread_in_vm, id=3236, stack(0x00390000,0x003e0000)]
+
+Stack: [0x00390000,0x003e0000]
+
+[error occurred during error reporting (printing native stack), id 0xc0000005]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x01c39400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=3236, stack(0x00390000,0x003e0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\bin\javaw.exe
+0x772a0000 - 0x77420000 	C:\Windows\SysWOW64\ntdll.dll
+0x766d0000 - 0x767e0000 	C:\Windows\syswow64\kernel32.dll
+0x76680000 - 0x766c7000 	C:\Windows\syswow64\KERNELBASE.dll
+0x76880000 - 0x76920000 	C:\Windows\syswow64\ADVAPI32.dll
+0x76540000 - 0x765ec000 	C:\Windows\syswow64\msvcrt.dll
+0x74d40000 - 0x74d59000 	C:\Windows\SysWOW64\sechost.dll
+0x74b10000 - 0x74c00000 	C:\Windows\syswow64\RPCRT4.dll
+0x74980000 - 0x749e0000 	C:\Windows\syswow64\SspiCli.dll
+0x74970000 - 0x7497c000 	C:\Windows\syswow64\CRYPTBASE.dll
+0x74c40000 - 0x74d40000 	C:\Windows\syswow64\USER32.dll
+0x74d70000 - 0x74e00000 	C:\Windows\syswow64\GDI32.dll
+0x74d60000 - 0x74d6a000 	C:\Windows\syswow64\LPK.dll
+0x767e0000 - 0x7687d000 	C:\Windows\syswow64\USP10.dll
+0x74e00000 - 0x74e60000 	C:\Windows\system32\IMM32.DLL
+0x76440000 - 0x7650c000 	C:\Windows\syswow64\MSCTF.dll
+0x7c340000 - 0x7c396000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\msvcr71.dll
+0x6d8b0000 - 0x6db06000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\client\jvm.dll
+0x747a0000 - 0x747d2000 	C:\Windows\system32\WINMM.dll
+0x721d0000 - 0x7221c000 	C:\Windows\system32\apphelp.dll
+0x6d340000 - 0x6d348000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\hpi.dll
+0x75260000 - 0x75265000 	C:\Windows\syswow64\PSAPI.DLL
+0x6d860000 - 0x6d86c000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\verify.dll
+0x6d3e0000 - 0x6d3ff000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\java.dll
+0x6d8a0000 - 0x6d8af000 	D:\Program files\Myeclipse8.5\binary\com.sun.java.jdk.win32.x86_1.6.0.013\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=GBK -Xbootclasspath:D:\android-sdk-windows\platforms\android-14\android.jar 
+java_command: org.jboss.netty.channel.socket.nio.NioProviderMetadata
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0_11
+PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Java\jdk1.6.0_10\bin;\C:\Program Files\TortoiseGit\bin;D:\android-sdk-windows\platform-tools;d:\maven-3.0.5\bin;D:\install\安装包\工具\UltraEdit\;C:\Users\zhaoxu\bin
+USERNAME=zhaoxu
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows NT 6.1 Build 7601 Service Pack 1
+
+CPU:total 4 (8 cores per cpu, 2 threads per core) family 6 model 10 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, ht
+
+Memory: 4k page, physical 4194303k(3173920k free), swap 4194303k(4194303k free)
+
+vm_info: Java HotSpot(TM) Client VM (11.3-b02) for windows-x86 JRE (1.6.0_13-b03), built on Mar  9 2009 01:15:24 by "java_re" with MS VC++ 7.1
+
+time: Tue Apr 23 11:27:06 2013
+elapsed time: 0 seconds
+

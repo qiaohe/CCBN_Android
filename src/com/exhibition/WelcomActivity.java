@@ -89,19 +89,23 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		new Thread() {
 			public void run() {
 				try {
-					mEventDataNew = new Gson().fromJson(
+					/*mEventDataNew = new Gson().fromJson(
 							XmlDB.getInstance(WelcomActivity.this)
 									.getKeyStringValue(
 											StringPools.CCBN_ALL_DATA, ""),
-							EventData.class);
-					if (mEventDataNew == null
+							EventData.class);*/
+					/*if (mEventDataNew == null
 							|| !mEventDataOld.getUpdatedAt().equals(
 									mEventDataNew.getUpdatedAt())) {
 						mJsonData = controller.getService().findAll();
 
 						XmlDB.getInstance(WelcomActivity.this).saveKey(
 								StringPools.CCBN_ALL_DATA, mJsonData);
-					}   
+					}   */
+					mJsonData = controller.getService().findAll();
+
+					XmlDB.getInstance(WelcomActivity.this).saveKey(
+							StringPools.CCBN_ALL_DATA, mJsonData);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

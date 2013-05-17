@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MapActivity extends Activity {
@@ -23,16 +24,17 @@ public class MapActivity extends Activity {
 	private TextView tvTitle;
 	private BMapManager bmapManager;
 	private MapView mapView;
+	private ImageView imageview;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
-		bmapManager = new BMapManager(getApplicationContext());
+		/*bmapManager = new BMapManager(getApplicationContext());  
 		bmapManager.init(StringPools.baiDuMapStrKey, null);
 		
 		setContentView(R.layout.activity_map);
-		mapView = (MapView) this.findViewById(R.id.activity_map_mapView);
+		mapView = (MapView) this.findViewById(R.id.activity_map_mapView);   
 		mapView.setBuiltInZoomControls(true);
 		MapController mapController = mapView.getController();
 		GeoPoint point = new GeoPoint((int)(30.915* 1E6),(int)(121.104* 1E6));
@@ -48,7 +50,12 @@ public class MapActivity extends Activity {
 				finish();
 			}
 		});
+		tvTitle = (TextView) this.findViewById(R.id.title_text_second);  
+		tvTitle.setText(R.string.map);*/
+		
+		setContentView(R.layout.activity_map);
 		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
 		tvTitle.setText(R.string.map);
+		
 	}
 }

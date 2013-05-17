@@ -1,9 +1,9 @@
 package com.exhibition;
 
 public final class AppConfig {
-//    public static final String HOST = "192.168.0.101";
-    public static final String HOST = "180.168.35.37";
-    public static final int PORT = 8080;
+    public static final String HOST = "192.168.0.100";
+    //public static final String HOST = "180.168.35.37";
+    public static final int PORT = 80;
     public static final int MESSAGE_PORT = 8888;
     public static final String CONTEXT_ROOT = "/exhibition";
     public static final String URL_SERVER = "http://" + HOST + ":" + PORT + CONTEXT_ROOT;

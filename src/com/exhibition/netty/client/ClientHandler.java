@@ -25,8 +25,7 @@ import java.util.Map;
 public class ClientHandler extends SimpleChannelUpstreamHandler {
     public static final String HEART_BEAT = ":[PING:PONG]";
     private Context context;
-    private boolean checkedIn;
-
+    private boolean checkedIn;  
     public ClientHandler(Context context) {
         this.context = context;
     }
@@ -45,7 +44,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
         while (message.startsWith(HEART_BEAT)) {
             message = message.substring(HEART_BEAT.length());
         }
-        if (message.isEmpty()) {
+        if (message.length() == 0) {
             return;
         }
         // It is not be able to divide service token from text message for now.

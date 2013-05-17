@@ -188,6 +188,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					HomeActivity.this.stopService(serviceIntent);
+					android.os.Process.killProcess(android.os.Process.myPid());
 					finish();
 				}
 			})

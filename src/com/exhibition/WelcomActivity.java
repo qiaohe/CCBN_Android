@@ -78,14 +78,14 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 					new DemoApplication.MyGeneralListener());
 		}
 		
-		mLocationClient = new LocationClient(this);
+		mLocationClient = new LocationClient(this); 
 		mLocationClient.registerLocationListener(new MyLocationListenner());
 		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
-		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(1000);
-		mLocationClient.setLocOption(option);
-		mLocationClient.start();   	
+		option.setOpenGps(true);// 打开gps   
+		option.setCoorType("bd09ll"); // 设置坐标类型   
+		option.setScanSpan(1000); 
+		mLocationClient.setLocOption(option); 
+		mLocationClient.start(); //开启定位  	
 		new Thread() {
 			public void run() {
 				try {
@@ -109,8 +109,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 				}
 			};
 		}.start(); 
-	}
-
+	}  
 	@Override
 	public void findView() {
 		mLogo = (ImageView) findViewById(R.id.logo);
@@ -129,19 +128,20 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		startActivity(intent);
 		finish();
 	}
+	
 	private void getAddress() {
 		MKSearch mMKSearch = new MKSearch();
 		mBMapManagerNew = new BMapManager(this);
 		mBMapManagerNew.init(StringPools.baiDuMapStrKey, null);
-		mMKSearch.init(mBMapManagerNew, new MySearchListener());
+		mMKSearch.init(mBMapManagerNew, new MySearchListener());   
 		mMKSearch.reverseGeocode(new GeoPoint((int) (locData.latitude * 1E6),
-				(int) (locData.longitude * 1E6)));
-	}
+				(int) (locData.longitude * 1E6)));   
+	} 
 
 	
 	
 	/**
-	 * 监听函数，又新位置的时候，格式化成字符串，输出到屏幕中
+	 * 监听函数，有新位置的时候，格式化成字符串，输出到屏幕中 
 	 */
 	public class MyLocationListenner implements BDLocationListener {
 		@Override
@@ -153,8 +153,8 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			mCheckInData.latitude = location.getLatitude();
 			mCheckInData.longitude = location.getLongitude();
 			locData.direction = 2.0f;
-			locData.accuracy = location.getRadius();
-			locData.direction = location.getDerect();
+			locData.accuracy = location.getRadius(); 
+			locData.direction = location.getDerect(); 
 			getAddress();
 		}
 
@@ -166,9 +166,9 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	}
 
 	/**
-	 * 内部类实现MKSearchListener接口,用于实现异步搜索服务
+	 * 内部类实现MKSearchListener接口,用于实现异步搜索服务  
 	 * 
-	 * @author liufeng
+	 * @author liufeng 
 	 */
 	public class MySearchListener implements MKSearchListener {
 		/**
@@ -185,19 +185,18 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 				return;
 			}
 			StringBuffer sb = new StringBuffer();
-			// 经纬度所对应的位置
-			sb.append(result.strAddr).append("/n");
+			// 经纬度所对应的位置  
+			sb.append(result.strAddr);
 			addressStr = sb.toString();
 			try {
-				addressStr = new String(addressStr.getBytes(),"UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addressStr = new String(addressStr.getBytes(),"UTF-8"); 
+			} catch (UnsupportedEncodingException e) {  
+				e.printStackTrace();    
 			}
 			
-			mCheckInData.address = addressStr;
-			System.out.println(addressStr);
-			goToNextPage();
+			mCheckInData.address = addressStr;  
+			System.out.println(addressStr);   
+			goToNextPage();  
 		}
 
 		/**
@@ -210,7 +209,8 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		 */
 		@Override
 		public void onGetDrivingRouteResult(MKDrivingRouteResult result,
-				int iError) {
+				int iError) { 
+			
 		}
 
 		/**
@@ -225,6 +225,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		 */
 		@Override
 		public void onGetPoiResult(MKPoiResult result, int type, int iError) {
+			
 		}
 
 		/**
@@ -260,13 +261,14 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 		@Override
 		public void onGetPoiDetailSearchResult(int arg0, int arg1) {
-
+			
 		}
 
 		@Override
 		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
-
+			
 		}
 	}
+	
 	
 }

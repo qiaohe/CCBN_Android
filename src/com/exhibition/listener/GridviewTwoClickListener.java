@@ -1,17 +1,16 @@
 package com.exhibition.listener;
 
-
-import com.exhibition.NewsActivity;
-import com.exhibition.TrafficActivity;  
-import com.exhibition.entities.EventData;
-import com.exhibition.entities.NewsData;
-import com.exhibition.utils.DataUtil;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.exhibition.NewsActivity;
+import com.exhibition.TrafficActivity;
+import com.exhibition.entities.NewsData;
+import com.exhibition.utils.DataUtil;
+
 
 public class GridviewTwoClickListener implements OnItemClickListener {
 	private Context context;  

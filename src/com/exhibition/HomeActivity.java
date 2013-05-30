@@ -53,8 +53,9 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		setContentView(R.layout.home_page);  
 		initData();
 		findView();
-		addAction();  
-		socketLink(); 		  
+
+		addAction();
+		socketLink(); 		
 	}
 
 	private void socketLink() {
@@ -69,6 +70,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			map.put("icon", itemImgs[i]);
 			map.put("title", itemTexts[i]);
 			gvOneData.add(map); 
+
 		}
 		for (int i = 0; i < itemImgs2.length; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -86,7 +88,10 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		ivDiantwo = (ImageView) this.findViewById(R.id.home_page_im_diantwo);
 		gvOne = createGridView(gvOneData);  
 		gvTwo = createGridView(gvTwoData);  
-	} 
+		geDetector = new GestureDetector(this);
+	}
+	
+
 
 	@Override
 	public void addAction() {
@@ -105,7 +110,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			}
 		};
 		gridview.setHorizontalSpacing(5);
-		gridview.setVerticalSpacing(5);  
+		gridview.setVerticalSpacing(5);
 		gridview.setNumColumns(3);
 		gridview.setPadding(10,10,10,10);
 		SimpleAdapter adapter = new SimpleAdapter(HomeActivity.this, 
@@ -194,9 +199,9 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			})
 			.setNegativeButton("取消", new OnClickListener() {
 				  
-				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					
+					HomeActivity.this.stopService(serviceIntent);
+					finish();
 				}
 			}).show();
 			return true;

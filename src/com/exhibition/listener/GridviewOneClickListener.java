@@ -18,8 +18,7 @@ import com.exhibition.entities.EventData.Exhibitor;
 import com.exhibition.entities.EventData.Speaker;
 import com.exhibition.utils.DataUtil;  
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.content.Intent; 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,7 +64,7 @@ public class GridviewOneClickListener implements OnItemClickListener {
 			break;
 		case 3:
 			it = new Intent(context, AboutActivity.class);
-			it.putExtra("detail", eventData.getDescription()); 
+			it.putExtra("detail", eventData.getDescription());  
 			it.putExtra("title", itemTexts[position]);
 			context.startActivity(it);
 			break;

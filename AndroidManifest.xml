@@ -84,6 +84,8 @@
        	    	  android:screenOrientation="sensor"
        	    	  android:configChanges="orientation|keyboardHidden"
        	    	  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+       	<!--  <activity android:name=".VideoActivity"  android:screenOrientation="sensor"
+       	    android:configChanges="orientation|keyboardHidden"/> -->
        	<activity android:name=".TrafficActivity" />
        	<activity android:name=".QRCodeActivity" />  
        	<activity android:name=".TrafficItemActivity" /> 

@@ -91,12 +91,12 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		mLocationClient.setLocOption(option); 
 		mLocationClient.start(); //开启定位  	
 		new Thread() {
-			public void run() {
+			public void run() {  
 				try {  
 					/*mEventDataNew = new Gson().fromJson(
-							XmlDB.getInstance(WelcomActivity.this)
+							XmlDB.getInstance(WelcomActivity.this)  
 									.getKeyStringValue(
-											StringPools.CCBN_ALL_DATA, ""),
+											StringPools.CCBN_ALL_DATA, ""), 
 							EventData.class);
 					if (mEventDataNew == null
 							|| !mEventDataOld.getUpdatedAt().equals(
@@ -109,9 +109,9 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 								StringPools.CCBN_NEWS_DATA, newsData);
 					/*}*/   
 				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) { 
-					e.printStackTrace();
+					e.printStackTrace(); 
+				} catch (Exception e) {   
+					e.printStackTrace(); 
 				} 
 			};
 		}.start();      

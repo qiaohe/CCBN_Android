@@ -84,7 +84,7 @@ public class CustomerHttpClient {
 					params, schReg);
 			customerHttpClient = new DefaultHttpClient(conMgr, params);
 		}
-		return customerHttpClient;
+		return customerHttpClient;  
 	}
 
 	public static String post(String url, NameValuePair... params) {
@@ -93,7 +93,7 @@ public class CustomerHttpClient {
 			// 编码参数
 			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 			// 请求参数
-			for (NameValuePair p : params) {
+			for (NameValuePair p : params) { 
 				formparams.add(p);
 			}
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
@@ -106,8 +106,8 @@ public class CustomerHttpClient {
 			HttpClient client = getHttpClient();
 			HttpResponse response = client.execute(request);
 			HttpEntity resEntity = response.getEntity();
-			return (resEntity == null) ? null : EntityUtils.toString(resEntity,
-					CHARSET);
+			return (resEntity == null) ? null : EntityUtils.toString(resEntity,  
+					CHARSET);  
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		} catch (ClientProtocolException e) {

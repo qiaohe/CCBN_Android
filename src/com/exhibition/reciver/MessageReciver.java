@@ -31,8 +31,7 @@ public class MessageReciver extends BroadcastReceiver {
 		clientService = new ClientServiceImplForNet(clientContext);
 		latitude = intent.getDoubleExtra("latitude", 0.0);
 		longitude = intent.getDoubleExtra("longitude", 0.0);
-		address = intent.getStringExtra("address");
-Log.i("data", "reciver: " + latitude + "  " + longitude + " " + address);
+		address = intent.getStringExtra("address"); 
 		new Thread(new Runnable() {
 			
 			@Override

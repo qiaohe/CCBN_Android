@@ -5,6 +5,7 @@ public class StringPools {
 	 * App所有数据
 	 */
 	public final static String CCBN_ALL_DATA = "ccbn_all_data";
+	public final static String CCBN_NEWS_DATA = "ccbn_news_data";
 	/**
 	 * 保存的键值信息只有当清除数据或卸载应用后才会进行数据清空操作. 
 	 * 也用于保存例如上一次登陆用户的id信息，保存应用的版本信息.

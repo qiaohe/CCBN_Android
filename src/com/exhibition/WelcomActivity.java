@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -30,6 +32,7 @@ import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.entities.CheckInData;
 import com.exhibition.entities.EventData;
+import com.exhibition.entities.NewsData;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.service.ClientController;
 import com.exhibition.utils.DataUtil;
@@ -40,14 +43,15 @@ import com.google.gson.Gson;
 public class WelcomActivity extends Activity implements ActivityInterface {
 	private EventData mEventDataOld;   //本地的数据
 	private EventData mEventDataNew;   //新的网络数据
-	private Context context;
+	private Context context;  
 	private ImageView mLogo;
 	private AnimationDrawable mAnimationDrawable;
-	private ClientController controller;
+	private ClientController controller;  
 	private String mJsonData;
+	private String newsData;
 	private LocationData locData = new LocationData();
-	private LocationClient mLocationClient;
-	private BMapManager mBMapManagerNew;
+	private LocationClient mLocationClient;  
+	private BMapManager mBMapManagerNew;  
 	private String addressStr;
 	private CheckInData mCheckInData = new CheckInData();
 
@@ -55,15 +59,15 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.welcom_page);
+		setContentView(R.layout.welcom_page); 
 
-		context = this.getApplicationContext();
-		mEventDataOld = DataUtil.getEventData(context);
-		controller = ClientController.getController(this);
-		findView();
+		context = this.getApplicationContext();               
+		mEventDataOld = DataUtil.getEventData(context);   
+		controller = ClientController.getController(this);     
+		findView();    
 		
-		mLogo.setBackgroundResource(R.anim.logo_anim);
-		//AnimationDrawable逐帧动画类
+		mLogo.setBackgroundResource(R.anim.logo_anim);  
+		//AnimationDrawable逐帧动画类  
 		mAnimationDrawable = (AnimationDrawable) mLogo.getBackground();
 		mLogo.post(new Runnable() {  
 			public void run() {
@@ -75,40 +79,45 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		if (app.mBMapManager == null) {
 			app.mBMapManager = new BMapManager(this);
 			app.mBMapManager.init(DemoApplication.strKey,
-					new DemoApplication.MyGeneralListener());
+					new DemoApplication.MyGeneralListener());  
 		}
 		
-		mLocationClient = new LocationClient(this); 
-		mLocationClient.registerLocationListener(new MyLocationListenner());
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps   
-		option.setCoorType("bd09ll"); // 设置坐标类型   
+		mLocationClient = new LocationClient(this);   
+		mLocationClient.registerLocationListener(new MyLocationListenner());  
+		LocationClientOption option = new LocationClientOption();    
+		option.setOpenGps(true);// 打开gps       
+		option.setCoorType("bd09ll"); // 设置坐标类型         
 		option.setScanSpan(1000); 
 		mLocationClient.setLocOption(option); 
 		mLocationClient.start(); //开启定位  	
 		new Thread() {
 			public void run() {
-				try {
-					mEventDataNew = new Gson().fromJson(
+				try {  
+					/*mEventDataNew = new Gson().fromJson(
 							XmlDB.getInstance(WelcomActivity.this)
 									.getKeyStringValue(
 											StringPools.CCBN_ALL_DATA, ""),
 							EventData.class);
 					if (mEventDataNew == null
 							|| !mEventDataOld.getUpdatedAt().equals(
-									mEventDataNew.getUpdatedAt())) {
-						mJsonData = controller.getService().findAll();
-
+									mEventDataNew.getUpdatedAt())) {*/
+						mJsonData = controller.getService().findAll();  
 						XmlDB.getInstance(WelcomActivity.this).saveKey(
 								StringPools.CCBN_ALL_DATA, mJsonData);
-					}   
+						newsData = controller.getService().getNewsData();    
+						XmlDB.getInstance(WelcomActivity.this).saveKey(  
+								StringPools.CCBN_NEWS_DATA, newsData);
+					/*}*/   
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				} catch (Exception e) {
+				} catch (Exception e) { 
 					e.printStackTrace();
-				}
+				} 
 			};
-		}.start(); 
+		}.start();      
+		
+		/*GetNewsDataTask getNewsDataTask = new GetNewsDataTask();
+		getNewsDataTask.execute();*/ 
 	}  
 	@Override
 	public void findView() {
@@ -116,17 +125,18 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	}
 
 	@Override
-	public void addAction() {
+	public void addAction() {   
 
 	}
 
-	private void goToNextPage() {
-		Intent intent = new Intent(WelcomActivity.this, HomeActivity.class);
-		Resources.latitude = mCheckInData.latitude;
-		Resources.longitude = mCheckInData.longitude;
-		Resources.address = mCheckInData.address;
-		startActivity(intent);
+	private void goToNextPage() {   
+		Intent intent = new Intent(WelcomActivity.this, HomeActivity.class);  
+		Resources.latitude = mCheckInData.latitude;  
+		Resources.longitude = mCheckInData.longitude;  
+		Resources.address = mCheckInData.address;  
+		startActivity(intent);  
 		finish();
+		mLocationClient.stop();
 	}
 	
 	private void getAddress() {
@@ -269,6 +279,19 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			
 		}
 	}
-	
-	
+
+	class GetNewsDataTask extends AsyncTask<Void, Integer, Integer>{    
+		@Override
+		protected Integer doInBackground(Void... params) {  
+			try {
+				newsData = controller.getService().getNewsData();    
+				XmlDB.getInstance(WelcomActivity.this).saveKey(  
+						StringPools.CCBN_NEWS_DATA, newsData);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+			return null;
+		}  
+	}
 }

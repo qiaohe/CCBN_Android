@@ -36,6 +36,6 @@ public class MessageActivity extends Activity {
 				                               new String[]{"timeAndContent"},
 				                               new int[]{R.id.item_text}));
 		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
-		tvTitle.setText(R.string.message);
+		tvTitle.setText(R.string.message);   
 	}
 }

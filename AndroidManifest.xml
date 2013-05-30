@@ -86,15 +86,17 @@
        	    	  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
        	<activity android:name=".TrafficActivity" />
        	<activity android:name=".QRCodeActivity" />  
-       	<activity android:name=".TrafficItemActivity" />  
-        <service android:name="com.baidu.location.f" android:enabled="true"
-			android:process=":remote">
+       	<activity android:name=".TrafficItemActivity" /> 
+       	<activity android:name=".NewsActivity" />
+       	<activity android:name=".NewsDetailActivity"/> 
+       	
+        <service android:name="com.baidu.location.f" android:enabled="true" >
 		</service>
 		<service android:name="com.exhibition.service.SocketService" android:enabled="true"
 			>
 		</service>
 		<receiver android:name="com.exhibition.reciver.MessageReciver"/>
-    </application>
+    </application>  
 	
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

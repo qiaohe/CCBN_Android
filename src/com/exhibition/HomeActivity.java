@@ -34,12 +34,12 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			R.drawable.qrcode};  
 	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", 
 				"设置", "地图","消息","视频","二维码"};   
-	private int[] itemImgs2 = {R.drawable.traffic};
-	private String[] itemTexts2 = {"交通"};
+	private int[] itemImgs2 = {R.drawable.traffic,R.drawable.message};
+	private String[] itemTexts2 = {"交通","新闻"};
 	private List<Map<String, Object>> gvOneData = new ArrayList<Map<String, Object>>();
 	private List<Map<String, Object>> gvTwoData = new ArrayList<Map<String, Object>>();
-	private ViewFlipper viewFlipper;
-	private GridView gvOne;
+	private ViewFlipper viewFlipper;  
+	private GridView gvOne;  
 	private GridView gvTwo;
 	private final static int SLIP_DISTANCE = 50;
 	private GestureDetector geDetector;
@@ -53,8 +53,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		setContentView(R.layout.home_page);  
 		initData();
 		findView();
-		addAction();
-		socketLink(); 		
+		addAction();  
+		socketLink(); 		  
 	}
 
 	private void socketLink() {
@@ -68,7 +68,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("icon", itemImgs[i]);
 			map.put("title", itemTexts[i]);
-			gvOneData.add(map);
+			gvOneData.add(map); 
 		}
 		for (int i = 0; i < itemImgs2.length; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -76,24 +76,24 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			map.put("title", itemTexts2[i]);
 			gvTwoData.add(map);
 		}
-		geDetector = new GestureDetector(this);
+		geDetector = new GestureDetector(this); 
 	}
 	
 	@Override
-	public void findView() {  
+	public void findView() {    
 		viewFlipper = (ViewFlipper) this.findViewById(R.id.home_page_viewflipper);
 		ivDianone = (ImageView) this.findViewById(R.id.home_page_im_dianone);
 		ivDiantwo = (ImageView) this.findViewById(R.id.home_page_im_diantwo);
-		gvOne = createGridView(gvOneData);
-		gvTwo = createGridView(gvTwoData);
+		gvOne = createGridView(gvOneData);  
+		gvTwo = createGridView(gvTwoData);  
 	} 
 
 	@Override
 	public void addAction() {
 		gvOne.setOnItemClickListener(new GridviewOneClickListener(this,itemTexts));
 		gvTwo.setOnItemClickListener(new GridviewTwoClickListener(this,itemTexts2));
-		viewFlipper.addView(gvOne);
-		viewFlipper.addView(gvTwo);
+		viewFlipper.addView(gvOne);  
+		viewFlipper.addView(gvTwo);   
 	}  
 	
 	private GridView createGridView(List<Map<String, Object>> data) {
@@ -105,7 +105,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			}
 		};
 		gridview.setHorizontalSpacing(5);
-		gridview.setVerticalSpacing(5);
+		gridview.setVerticalSpacing(5);  
 		gridview.setNumColumns(3);
 		gridview.setPadding(10,10,10,10);
 		SimpleAdapter adapter = new SimpleAdapter(HomeActivity.this, 
@@ -114,7 +114,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 												 new String[]{"icon","title"}, 
 												 new int[]{R.id.gridview_img,R.id.gridview_text});
 		gridview.setAdapter(adapter);
-		return gridview;  
+		return gridview;    
 	}
 
 	@Override
@@ -186,14 +186,14 @@ public class HomeActivity extends Activity implements ActivityInterface,
 			.setPositiveButton("确定", new OnClickListener() {
 				
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					HomeActivity.this.stopService(serviceIntent);
-					android.os.Process.killProcess(android.os.Process.myPid());
-					finish();
+				public void onClick(DialogInterface dialog, int which) {   
+					//HomeActivity.this.stopService(serviceIntent);  
+					android.os.Process.killProcess(android.os.Process.myPid());   
+					finish();       
 				}
 			})
 			.setNegativeButton("取消", new OnClickListener() {
-				
+				  
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					

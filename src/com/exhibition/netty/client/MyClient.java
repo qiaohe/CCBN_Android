@@ -1,68 +1,52 @@
 package com.exhibition.netty.client;
 
 import android.content.Context;
+import com.exhibition.domain.mobile.MessageObject;
 import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.*;
+import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jboss.netty.channel.DefaultChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import org.jboss.netty.handler.codec.string.StringDecoder;
-import org.jboss.netty.handler.codec.string.StringEncoder;
+import org.jboss.netty.handler.codec.serialization.ClassResolvers;
+import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
+import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
 
 
 public class MyClient {
-
     private ClientBootstrap bootstrap;
 
     public MyClient() {
-    	this(null);
-        bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
-                Executors.newCachedThreadPool(), Executors
-                .newCachedThreadPool()));
+        this(null);
+    }
+
+    public MyClient(final Context context) {
+        bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(
+                Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline result = new DefaultChannelPipeline();
-
-                result.addLast("encode", new StringEncoder(Charset.forName("UTF-8")));
-                result.addLast("decode", new StringDecoder(Charset.forName("UTF-8")));
-                result.addLast("handler", new ClientHandler());
-                return result;
-            }
-        });
-
-        bootstrap.setOption("tcpNoDelay", true);
-        bootstrap.setOption("keepAlive", true);
-    }
-
-    public MyClient(final Context context) {
-        bootstrap = new ClientBootstrap((ChannelFactory) new NioClientSocketChannelFactory(
-                Executors.newCachedThreadPool(), Executors
-                .newCachedThreadPool()));   
-        bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-            @Override
-            public ChannelPipeline getPipeline() throws Exception {
-                ChannelPipeline result = new DefaultChannelPipeline();  
-                result.addLast("encode", new StringEncoder(Charset.forName("UTF-8")));
-                result.addLast("decode", new StringDecoder(Charset.forName("UTF-8")));
+                result.addLast("encode", new ObjectEncoder());
+                result.addLast("decode", new ObjectDecoder(
+                        ClassResolvers.cacheDisabled(MessageObject.class.getClassLoader())));
                 result.addLast("handler", new ClientHandler(context));
                 return result;
             }
         });
-        bootstrap.setOption("tcpNoDelay", true);
-        bootstrap.setOption("keepAlive", true);
     }
 
     /**
      * 建立socket连接
      * -	 * @param host 地址
-     * -	 * @param poot 端口号
+     * -	 * @param port 端口号
      */
-    private ChannelFuture getChannelFuture(final String host, final int poot) {
+    private ChannelFuture getChannelFuture(final String host, final int port) {
         try {
-            ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(host, poot));
+            ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(host, port));
             channelFuture.awaitUninterruptibly();
             if (!channelFuture.isSuccess()) {
                 channelFuture.getChannel().getCloseFuture().awaitUninterruptibly();
@@ -70,21 +54,21 @@ public class MyClient {
             }
             return channelFuture;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
-        }  
+        }
     }
 
-    public void send(final String jSonMessage, final String host, final int poot) {  
-        ChannelFuture future = getChannelFuture(host, poot);
+    public void send(final String jSonMessage, final String host, final int port) {
+        ChannelFuture future = getChannelFuture(host, port);
         if (future != null) {
             future.getChannel().write(jSonMessage);
         }
     }
-
-    //private Context context;
-    public interface MessageListener {
-        public void onMessageReceived(MessageEvent e);
+    
+    public void send(final String host, final int port, MessageObject messageObject) {
+        ChannelFuture future = getChannelFuture(host, port);
+        if (future != null) {
+            future.getChannel().write(messageObject);
+        }
     }
-
 }

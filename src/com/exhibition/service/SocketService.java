@@ -4,16 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.IBinder;
 import com.exhibition.AppConfig;
-import com.exhibition.netty.client.ClientData;
+import com.exhibition.domain.mobile.MessageObjects;
 import com.exhibition.netty.client.MyClient;
 import com.exhibition.utils.MobileConfig;
-import com.google.gson.Gson;
 
 public class SocketService extends IntentService {
-
-    private MobileConfig mMobileConfig;
-    private Gson gson;
-
     public SocketService(String name) {
         super(name);
     }
@@ -27,28 +22,20 @@ public class SocketService extends IntentService {
         return null;
     }
 
-    private void linkSevice() {
-        /*if (XmlDB.getInstance(this)
-				.getKeyStringValue(StringPools.mServiceToken, "").equals("")) {*/
+    private void linkService() {
         MyClient client = new MyClient(getApplicationContext());
-        ClientData data = new ClientData();
-        mMobileConfig = MobileConfig.getMobileConfig(this);
-        gson = new Gson();
-        data.setMacAddress(mMobileConfig.getLocalMacAddress());
-        data.setAppCode("CCBN");
-        String startupMessage = gson.toJson(data);
-        client.send(startupMessage, AppConfig.HOST, AppConfig.MESSAGE_PORT);
+        MobileConfig mMobileConfig = MobileConfig.getMobileConfig(this);
+        client.send(AppConfig.HOST, AppConfig.MESSAGE_PORT,
+                MessageObjects.reqToken(AppConfig.APP_CODE, mMobileConfig.getLocalMacAddress()));
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
-        new Thread(new Runnable() {  
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                linkSevice();
+                linkService();
             }
         }).start();
-
-    }  
+    }
 }

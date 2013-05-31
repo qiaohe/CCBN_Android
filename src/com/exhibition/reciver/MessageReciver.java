@@ -1,16 +1,14 @@
 package com.exhibition.reciver;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.service.ClientContext;
 import com.exhibition.service.ClientService;
 import com.exhibition.service.ClientServiceImplForNet;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources.NotFoundException;
-import android.util.Log;
 
 /**
  * 消息广播接收者
@@ -23,9 +21,9 @@ public class MessageReciver extends BroadcastReceiver {
 	private double latitude;
 	private double longitude;
 	private String address = "";
+    
 	@Override
 	public void onReceive(Context context, Intent intent) {
-
 		this.context = context;
 		ClientContext clientContext = ClientContext.createClientContext();
 		clientService = new ClientServiceImplForNet(clientContext);
@@ -45,7 +43,6 @@ public class MessageReciver extends BroadcastReceiver {
 				checkIn();  
 			}
 		}).start();
-
 	}
 
 	/**

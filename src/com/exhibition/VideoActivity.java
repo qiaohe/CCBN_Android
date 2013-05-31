@@ -99,7 +99,5 @@ public class VideoActivity extends Activity implements ActivityInterface {
 		videoView.seekTo(previousPosition);
 		videoView.start(); 
 		 
-	
-	
 	}
 }

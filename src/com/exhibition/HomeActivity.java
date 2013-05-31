@@ -30,12 +30,12 @@ public class HomeActivity extends Activity implements ActivityInterface,
 		OnGestureListener{ 
 	private int[] itemImgs = { R.drawable.schedule, R.drawable.exhibitors,
 			R.drawable.speakers, R.drawable.about, R.drawable.setting,
-			R.drawable.maps, R.drawable.message,R.drawable.video,
+			R.drawable.news, R.drawable.message,R.drawable.video,
 			R.drawable.qrcode};  
 	private String[] itemTexts = { "日程", "参展商", "嘉宾", "关于", 
-				"设置", "地图","消息","视频","二维码"};   
-	private int[] itemImgs2 = {R.drawable.traffic,R.drawable.message};
-	private String[] itemTexts2 = {"交通","新闻"};
+				"设置", "新闻","消息","视频","二维码"};   
+	private int[] itemImgs2 = {R.drawable.traffic,R.drawable.maps};
+	private String[] itemTexts2 = {"交通","地图"};
 	private List<Map<String, Object>> gvOneData = new ArrayList<Map<String, Object>>();
 	private List<Map<String, Object>> gvTwoData = new ArrayList<Map<String, Object>>();
 	private ViewFlipper viewFlipper;  
@@ -43,7 +43,7 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private GridView gvTwo;
 	private final static int SLIP_DISTANCE = 50;
 	private GestureDetector geDetector;
-	private boolean nextORPrevours = true;   //ture 为next
+	private boolean nextORPrevours = true;   //ture 为next  
 	private ImageView ivDianone,ivDiantwo;
 	private Intent serviceIntent;
 	@Override
@@ -197,11 +197,8 @@ public class HomeActivity extends Activity implements ActivityInterface,
 					finish();       
 				}
 			})
-			.setNegativeButton("取消", new OnClickListener() {
-				  
+			.setNegativeButton("取消", new OnClickListener() { 
 				public void onClick(DialogInterface dialog, int which) {
-					HomeActivity.this.stopService(serviceIntent);
-					finish();
 				}
 			}).show();
 			return true;

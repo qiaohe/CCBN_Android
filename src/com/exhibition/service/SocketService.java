@@ -7,13 +7,11 @@ import com.exhibition.AppConfig;
 import com.exhibition.netty.client.ClientData;
 import com.exhibition.netty.client.MyClient;
 import com.exhibition.utils.MobileConfig;
+import com.exhibition.utils.Resources;
 import com.google.gson.Gson;
 
-public class SocketService extends IntentService {
-
-    private MobileConfig mMobileConfig;
-    private Gson gson;
-
+public class SocketService extends IntentService { 
+	
     public SocketService(String name) {
         super(name);
     }
@@ -29,15 +27,17 @@ public class SocketService extends IntentService {
 
     private void linkSevice() {
         /*if (XmlDB.getInstance(this)
-				.getKeyStringValue(StringPools.mServiceToken, "").equals("")) {*/
-        MyClient client = new MyClient(getApplicationContext());
-        ClientData data = new ClientData();
-        mMobileConfig = MobileConfig.getMobileConfig(this);
-        gson = new Gson();
-        data.setMacAddress(mMobileConfig.getLocalMacAddress());
-        data.setAppCode("CCBN");
-        String startupMessage = gson.toJson(data);
-        client.send(startupMessage, AppConfig.HOST, AppConfig.MESSAGE_PORT);
+				.getKeyStringValue(StringPools.mServiceToken, "").equals("")) {*/  
+        if(!Resources.isSocketLinked){
+        	MyClient client = new MyClient(getApplicationContext());
+	        ClientData data = new ClientData();  
+	        MobileConfig mobileConfig = MobileConfig.getMobileConfig(this);
+	        Gson gson = new Gson();  
+	        data.setMacAddress(mobileConfig.getLocalMacAddress());
+	        data.setAppCode("CCBN");    
+	        String startupMessage = gson.toJson(data);
+	        client.send(startupMessage, AppConfig.HOST, AppConfig.MESSAGE_PORT);
+        }
     }
 
     @Override
@@ -47,8 +47,7 @@ public class SocketService extends IntentService {
             @Override
             public void run() {
                 linkSevice();
-            }
-        }).start();
-
+            } 
+        }).start();  
     }  
 }

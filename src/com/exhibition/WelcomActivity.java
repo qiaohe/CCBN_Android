@@ -63,11 +63,11 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 		context = this.getApplicationContext();               
 		mEventDataOld = DataUtil.getEventData(context);   
-		controller = ClientController.getController(this);     
-		findView();    
+		controller = ClientController.getController(this);       
+		findView();      
 		
-		mLogo.setBackgroundResource(R.anim.logo_anim);  
-		//AnimationDrawable逐帧动画类  
+		mLogo.setBackgroundResource(R.anim.logo_anim);    
+		//AnimationDrawable逐帧动画类    
 		mAnimationDrawable = (AnimationDrawable) mLogo.getBackground();
 		mLogo.post(new Runnable() {  
 			public void run() {
@@ -75,27 +75,27 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			}
 		});
 		
-		DemoApplication app = (DemoApplication) this.getApplication();
+		DemoApplication app = (DemoApplication) this.getApplication();  
 		if (app.mBMapManager == null) {
 			app.mBMapManager = new BMapManager(this);
-			app.mBMapManager.init(DemoApplication.strKey,
+			app.mBMapManager.init(DemoApplication.strKey, 
 					new DemoApplication.MyGeneralListener());  
 		}
 		
 		mLocationClient = new LocationClient(this);   
 		mLocationClient.registerLocationListener(new MyLocationListenner());  
 		LocationClientOption option = new LocationClientOption();    
-		option.setOpenGps(true);// 打开gps       
-		option.setCoorType("bd09ll"); // 设置坐标类型         
+		option.setOpenGps(true);// 打开gps         
+		option.setCoorType("bd09ll"); // 设置坐标类型            
 		option.setScanSpan(1000); 
-		mLocationClient.setLocOption(option); 
-		mLocationClient.start(); //开启定位  	
+		mLocationClient.setLocOption(option);   
+		mLocationClient.start(); //开启定位  	  
 		new Thread() {
 			public void run() {  
 				try {  
 					/*mEventDataNew = new Gson().fromJson(
-							XmlDB.getInstance(WelcomActivity.this)  
-									.getKeyStringValue(
+							XmlDB.getInstance(WelcomActivity.this)   
+									.getKeyStringValue(  
 											StringPools.CCBN_ALL_DATA, ""), 
 							EventData.class);
 					if (mEventDataNew == null
@@ -103,11 +103,11 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 									mEventDataNew.getUpdatedAt())) {*/
 						mJsonData = controller.getService().findAll();  
 						XmlDB.getInstance(WelcomActivity.this).saveKey(
-								StringPools.CCBN_ALL_DATA, mJsonData);
-						newsData = controller.getService().getNewsData();    
+								StringPools.CCBN_ALL_DATA, mJsonData);  
+						newsData = controller.getService().getNewsData();      
 						XmlDB.getInstance(WelcomActivity.this).saveKey(  
 								StringPools.CCBN_NEWS_DATA, newsData);
-					/*}*/   
+					/*}*/     
 				} catch (InterruptedException e) {
 					e.printStackTrace(); 
 				} catch (Exception e) {   
@@ -136,6 +136,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		Resources.address = mCheckInData.address;  
 		startActivity(intent);  
 		finish();
+		mLocationClient.getLocOption().setOpenGps(false);
 		mLocationClient.stop();
 	}
 	
@@ -146,9 +147,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		mMKSearch.init(mBMapManagerNew, new MySearchListener());   
 		mMKSearch.reverseGeocode(new GeoPoint((int) (locData.latitude * 1E6),
 				(int) (locData.longitude * 1E6)));   
-	} 
-
-	
+	}     
 	
 	/**
 	 * 监听函数，有新位置的时候，格式化成字符串，输出到屏幕中 
@@ -165,7 +164,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			locData.direction = 2.0f;
 			locData.accuracy = location.getRadius(); 
 			locData.direction = location.getDerect(); 
-			getAddress();
+			getAddress();    
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {
@@ -207,8 +206,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			mCheckInData.address = addressStr;  
 			System.out.println(addressStr);   
 			goToNextPage();  
-		}
-
+		}  
 		/**
 		 * 驾车路线搜索结果
 		 * 
@@ -231,7 +229,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		 * @param type
 		 *            返回结果类型（11,12,21:poi列表 7:城市列表）
 		 * @param iError
-		 *            错误号（0表示正确返回）
+		 *            错误号（0表示正确返回）  
 		 */
 		@Override
 		public void onGetPoiResult(MKPoiResult result, int type, int iError) {

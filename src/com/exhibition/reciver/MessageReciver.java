@@ -31,23 +31,20 @@ public class MessageReciver extends BroadcastReceiver {
 		clientService = new ClientServiceImplForNet(clientContext);
 		latitude = intent.getDoubleExtra("latitude", 0.0);
 		longitude = intent.getDoubleExtra("longitude", 0.0);
-		address = intent.getStringExtra("address"); 
-		new Thread(new Runnable() {
-			
+		address = intent.getStringExtra("address");  
+		new Thread(new Runnable() {  
 			@Override
-			public void run() {
-				try {
+			public void run() {    
+				try {   
 					Thread.sleep(3000);
 					registSevice();  
 				} catch (InterruptedException e) { 
 					e.printStackTrace();
-				}  
+				}    
 				checkIn();  
-			}
-		}).start();
-
-	}
-
+			}  
+		}).start();   
+	}   
 	/**
 	 * 注册
 	 */
@@ -62,11 +59,11 @@ public class MessageReciver extends BroadcastReceiver {
                         "ANDROID");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	/**
-	 * 签到
+	 * 签到  
 	 */
 	private void checkIn() {
 		try {

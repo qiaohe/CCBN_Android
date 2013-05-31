@@ -31,8 +31,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
     }
 
     public ClientHandler() {  
-    }
-
+    }  
     /**
      * linkService(socket连接)回调   
      */
@@ -73,10 +72,10 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         super.channelConnected(ctx, e);
         Intent intent = new Intent(context, MessageReciver.class);     
-        intent.putExtra("latitude", Resources.latitude); 
-        intent.putExtra("longitude", Resources.longitude);  
+        intent.putExtra("latitude", Resources.latitude);    
+        intent.putExtra("longitude", Resources.longitude);    
         intent.putExtra("address", Resources.address);       
-        context.sendBroadcast(intent);             
+        context.sendBroadcast(intent);               
     }
 
     private void addMessageToList(String message) {  
@@ -89,29 +88,28 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
             time.append(hour + ":");    
             time.append(minute + "  ");        
             map.put("timeAndContent", time.toString() + "         " + message);
-            Resources.messageMap.add(map);        
+            Resources.messageMap.add(map);          
         }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-        try { 
+        try {  
             e.getChannel().close();    
         } catch (Exception ignore) { 
-        }
+        } 
     }
 
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-        //super.channelDisconnected(ctx, e); 
-Log.i("data", "reconnect");     
-        /*Intent intent = new Intent(context,SocketService.class);     
-		context.startService(intent);*/       
+        //super.channelDisconnected(ctx, e);   
+    	Resources.isSocketLinked = false;
+		e.getChannel().close();
     }
     
     @Override
     public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e)
     		throws Exception { 
-    	super.channelClosed(ctx, e);       	
+    	super.channelClosed(ctx, e);   
     }
 }

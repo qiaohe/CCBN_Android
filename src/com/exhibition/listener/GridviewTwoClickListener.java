@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.exhibition.MapActivity;
 import com.exhibition.NewsActivity;
 import com.exhibition.TrafficActivity;
 import com.exhibition.entities.NewsData;
@@ -15,11 +16,11 @@ import com.exhibition.utils.DataUtil;
 public class GridviewTwoClickListener implements OnItemClickListener {
 	private Context context;  
 	private String[] itemTexts; 
-	private NewsData newsData;   
+	 
 	public GridviewTwoClickListener(Context context,String[] itemTexts) { 
 		this.context = context;   
 		this.itemTexts = itemTexts;   
-		newsData = DataUtil.getNewsData(context);    
+		    
 	}    
 	
 	@Override
@@ -33,10 +34,9 @@ public class GridviewTwoClickListener implements OnItemClickListener {
 			context.startActivity(it);
 			break;
 		case 1:
-			it = new Intent(context, NewsActivity.class);  
+			it = new Intent(context, MapActivity.class);  
 			it.putExtra("title", itemTexts[position]);
-			it.putExtra("newsData", newsData);    
-			context.startActivity(it);
+			context.startActivity(it); 
 			break; 
 		}
 	}

@@ -17,7 +17,7 @@
             android:launchMode="singleTask">
         </activity>
         <activity  
-            android:name=".WelcomActivity"
+            android:name=".WelcomeActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -97,8 +97,8 @@
             	 android:process=":remote"/>
 		<service android:name="com.exhibition.service.SocketService" android:enabled="true">
 		</service>
-		<receiver android:name="com.exhibition.reciver.MessageReciver"/>
-		<receiver android:name="com.exhibition.reciver.NetworkChangeRecivier">
+		<receiver android:name=".receiver.MessageReceiver"/>
+		<receiver android:name=".receiver.NetworkChangeReceiver">
 		    <intent-filter android:priority="1000">
 		        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
 		    </intent-filter>

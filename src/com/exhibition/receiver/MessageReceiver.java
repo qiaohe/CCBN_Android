@@ -1,4 +1,4 @@
-package com.exhibition.reciver;
+package com.exhibition.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.exhibition.service.ClientServiceImplForNet;
  * @author pjq
  *
  */
-public class MessageReciver extends BroadcastReceiver {
+public class MessageReceiver extends BroadcastReceiver {
 	private Context context;
 	private ClientService clientService;
 	private double latitude;
@@ -35,7 +35,7 @@ public class MessageReciver extends BroadcastReceiver {
 			public void run() {    
 				try {   
 					Thread.sleep(3000);
-					registSevice();  
+					registerService();  
 				} catch (InterruptedException e) { 
 					e.printStackTrace();
 				}    
@@ -47,7 +47,7 @@ public class MessageReciver extends BroadcastReceiver {
 	/**
 	 * 注册
 	 */
-	private void registSevice() {
+	private void registerService() {
 		try {
 			if (!XmlDB.getInstance(context)
 					.getKeyStringValue(StringPools.mServiceToken, "")

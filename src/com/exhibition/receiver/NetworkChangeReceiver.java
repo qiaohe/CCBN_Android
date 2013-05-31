@@ -1,4 +1,4 @@
-package com.exhibition.reciver;
+package com.exhibition.receiver;
 
 import com.exhibition.service.SocketService;
 
@@ -14,7 +14,7 @@ import android.util.Log;
  * @author pjq
  *
  */
-public class NetworkChangeRecivier extends BroadcastReceiver {
+public class NetworkChangeReceiver extends BroadcastReceiver {
 	private static final String CONNECTIVITY_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
 	@Override
 	public void onReceive(Context context, Intent intent) {

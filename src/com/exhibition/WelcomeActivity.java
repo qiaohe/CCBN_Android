@@ -1,46 +1,34 @@
 package com.exhibition;
 
-import java.io.UnsupportedEncodingException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.LocationData;
-import com.baidu.mapapi.search.MKAddrInfo;
-import com.baidu.mapapi.search.MKBusLineResult;
-import com.baidu.mapapi.search.MKDrivingRouteResult;
-import com.baidu.mapapi.search.MKPoiResult;
-import com.baidu.mapapi.search.MKSearch;
-import com.baidu.mapapi.search.MKSearchListener;
-import com.baidu.mapapi.search.MKSuggestionResult;
-import com.baidu.mapapi.search.MKTransitRouteResult;
-import com.baidu.mapapi.search.MKWalkingRouteResult;
+import com.baidu.mapapi.search.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.entities.CheckInData;
 import com.exhibition.entities.EventData;
-import com.exhibition.entities.NewsData;
 import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.service.ClientController;
 import com.exhibition.utils.DataUtil;
 import com.exhibition.utils.Resources;
-import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
 
 
-public class WelcomActivity extends Activity implements ActivityInterface {
+public class WelcomeActivity extends Activity implements ActivityInterface {
 	private EventData mEventDataOld;   //本地的数据
 	private EventData mEventDataNew;   //新的网络数据
 	private Context context;  
@@ -102,10 +90,10 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 							|| !mEventDataOld.getUpdatedAt().equals(
 									mEventDataNew.getUpdatedAt())) {*/
 						mJsonData = controller.getService().findAll();  
-						XmlDB.getInstance(WelcomActivity.this).saveKey(
+						XmlDB.getInstance(WelcomeActivity.this).saveKey(
 								StringPools.CCBN_ALL_DATA, mJsonData);  
 						newsData = controller.getService().getNewsData();      
-						XmlDB.getInstance(WelcomActivity.this).saveKey(  
+						XmlDB.getInstance(WelcomeActivity.this).saveKey(  
 								StringPools.CCBN_NEWS_DATA, newsData);
 					/*}*/     
 				} catch (InterruptedException e) {
@@ -130,7 +118,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	}
 
 	private void goToNextPage() {   
-		Intent intent = new Intent(WelcomActivity.this, HomeActivity.class);  
+		Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);  
 		Resources.latitude = mCheckInData.latitude;  
 		Resources.longitude = mCheckInData.longitude;  
 		Resources.address = mCheckInData.address;  
@@ -283,7 +271,7 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		protected Integer doInBackground(Void... params) {  
 			try {
 				newsData = controller.getService().getNewsData();    
-				XmlDB.getInstance(WelcomActivity.this).saveKey(  
+				XmlDB.getInstance(WelcomeActivity.this).saveKey(  
 						StringPools.CCBN_NEWS_DATA, newsData);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

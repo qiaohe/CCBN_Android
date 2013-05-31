@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.exhibition.MessageActivity;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
@@ -13,7 +12,7 @@ import com.exhibition.domain.mobile.MessageObject;
 import com.exhibition.domain.mobile.MessageObjects;
 import com.exhibition.domain.mobile.RespToken;
 import com.exhibition.domain.mobile.StringMessage;
-import com.exhibition.reciver.MessageReciver;
+import com.exhibition.receiver.MessageReceiver;
 import com.exhibition.utils.Resources;
 import org.jboss.netty.channel.*;
 
@@ -71,7 +70,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         super.channelConnected(ctx, e);
-        Intent intent = new Intent(context, MessageReciver.class);
+        Intent intent = new Intent(context, MessageReceiver.class);
         intent.putExtra("latitude", Resources.latitude);
         intent.putExtra("longitude", Resources.longitude);
         intent.putExtra("address", Resources.address);

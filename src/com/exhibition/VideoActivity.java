@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.os.Environment;  
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import com.hp.hpl.sparta.xpath.PositionEqualsExpr;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,7 +29,7 @@ public class VideoActivity extends Activity implements ActivityInterface {
 	private PopupWindow popupWindow;
 	private View viewController;
 	private File file;
-	@Override  
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,5 +89,7 @@ public class VideoActivity extends Activity implements ActivityInterface {
 			videoView.pause();
 			break;
 		}
+		videoView.seekTo(previousPosition);
+		videoView.start(); 
 	}
 }

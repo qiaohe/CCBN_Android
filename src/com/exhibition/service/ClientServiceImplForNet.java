@@ -68,16 +68,24 @@ public class ClientServiceImplForNet implements ClientService {
         mClientServiceToken.setServiceToken(serviceToken);
         mClientServiceToken.setExhibitionCode(exhibitionCode);
         mClientServiceToken.setMobilePlatform(mobilePlatform);
-        String jsonData = new Gson().toJson(mClientServiceToken);
+        String jsonData = new Gson().toJson(mClientServiceToken);  
         try {
             String response = CustomerHttpClient.postJson(AppConfig.URL_REGISTER, jsonData);
             return response;
-        } catch (Exception e) {
-            Toast.makeText(
+        } catch (Exception e) { 
+            Toast.makeText( 
                     controller.getCurrentActivity().getApplicationContext(),
                     e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return null;
+        return null;  
     }
-
+    
+    public String getNewsData() throws Exception {  
+    	try {
+            String response = CustomerHttpClient.get(AppConfig.URL_NEWS, "");
+            return response;
+        } catch (Exception ignore) {  
+        }
+        return null;
+    }  
 }

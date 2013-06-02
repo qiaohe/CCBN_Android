@@ -26,6 +26,11 @@ public interface ClientService {
      * @throws Exception
      */
     public String registerService(String serviceToken, String exhibitionCode, String mobilePlatform) throws Exception;
-
-
+    
+    /**
+     * 获得新闻数据
+     * @return 
+     * @throws Exception
+     */
+    public String getNewsData() throws Exception;  
 }

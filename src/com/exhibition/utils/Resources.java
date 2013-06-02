@@ -9,4 +9,5 @@ public class Resources {
 	public static double latitude;
 	public static double longitude;
 	public static String address = "";
+	public static boolean isSocketLinked;
 }

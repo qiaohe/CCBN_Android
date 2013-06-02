@@ -1,30 +1,20 @@
 package com.exhibition;
 
-import java.io.UnsupportedEncodingException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ImageView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.LocationData;
-import com.baidu.mapapi.search.MKAddrInfo;
-import com.baidu.mapapi.search.MKBusLineResult;
-import com.baidu.mapapi.search.MKDrivingRouteResult;
-import com.baidu.mapapi.search.MKPoiResult;
-import com.baidu.mapapi.search.MKSearch;
-import com.baidu.mapapi.search.MKSearchListener;
-import com.baidu.mapapi.search.MKSuggestionResult;
-import com.baidu.mapapi.search.MKTransitRouteResult;
-import com.baidu.mapapi.search.MKWalkingRouteResult;
+import com.baidu.mapapi.search.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
@@ -34,20 +24,22 @@ import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.service.ClientController;
 import com.exhibition.utils.DataUtil;
 import com.exhibition.utils.Resources;
-import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
 
 
-public class WelcomActivity extends Activity implements ActivityInterface {
+public class WelcomeActivity extends Activity implements ActivityInterface {
 	private EventData mEventDataOld;   //本地的数据
 	private EventData mEventDataNew;   //新的网络数据
-	private Context context;
+	private Context context;  
 	private ImageView mLogo;
 	private AnimationDrawable mAnimationDrawable;
-	private ClientController controller;
+	private ClientController controller;  
 	private String mJsonData;
+	private String newsData;
 	private LocationData locData = new LocationData();
-	private LocationClient mLocationClient;
-	private BMapManager mBMapManagerNew;
+	private LocationClient mLocationClient;  
+	private BMapManager mBMapManagerNew;  
 	private String addressStr;
 	private CheckInData mCheckInData = new CheckInData();
 
@@ -55,15 +47,15 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.welcom_page);
+		setContentView(R.layout.welcom_page); 
 
-		context = this.getApplicationContext();
-		mEventDataOld = DataUtil.getEventData(context);
-		controller = ClientController.getController(this);
-		findView();
+		context = this.getApplicationContext();               
+		mEventDataOld = DataUtil.getEventData(context);   
+		controller = ClientController.getController(this);       
+		findView();      
 		
-		mLogo.setBackgroundResource(R.anim.logo_anim);
-		//AnimationDrawable逐帧动画类
+		mLogo.setBackgroundResource(R.anim.logo_anim);    
+		//AnimationDrawable逐帧动画类    
 		mAnimationDrawable = (AnimationDrawable) mLogo.getBackground();
 		mLogo.post(new Runnable() {  
 			public void run() {
@@ -71,81 +63,82 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			}
 		});
 		
-		DemoApplication app = (DemoApplication) this.getApplication();
+		DemoApplication app = (DemoApplication) this.getApplication();  
 		if (app.mBMapManager == null) {
 			app.mBMapManager = new BMapManager(this);
-			app.mBMapManager.init(DemoApplication.strKey,
-					new DemoApplication.MyGeneralListener());
+			app.mBMapManager.init(DemoApplication.strKey, 
+					new DemoApplication.MyGeneralListener());  
 		}
 		
-		mLocationClient = new LocationClient(this);
-		mLocationClient.registerLocationListener(new MyLocationListenner());
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
-		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(1000);
-		mLocationClient.setLocOption(option);
-		mLocationClient.start();   	
+		mLocationClient = new LocationClient(this);   
+		mLocationClient.registerLocationListener(new MyLocationListenner());  
+		LocationClientOption option = new LocationClientOption();    
+		option.setOpenGps(true);// 打开gps         
+		option.setCoorType("bd09ll"); // 设置坐标类型            
+		option.setScanSpan(1000); 
+		mLocationClient.setLocOption(option);   
+		mLocationClient.start(); //开启定位  	  
 		new Thread() {
-			public void run() {
-				try {
+						public void run() {  
+				try {  
 					/*mEventDataNew = new Gson().fromJson(
-							XmlDB.getInstance(WelcomActivity.this)
-									.getKeyStringValue(
-											StringPools.CCBN_ALL_DATA, ""),
-							EventData.class);*/
-					/*if (mEventDataNew == null
+							XmlDB.getInstance(WelcomActivity.this)   
+									.getKeyStringValue(  
+											StringPools.CCBN_ALL_DATA, ""), 
+							EventData.class);
+					if (mEventDataNew == null
 							|| !mEventDataOld.getUpdatedAt().equals(
-									mEventDataNew.getUpdatedAt())) {
-						mJsonData = controller.getService().findAll();
-
-						XmlDB.getInstance(WelcomActivity.this).saveKey(
-								StringPools.CCBN_ALL_DATA, mJsonData);
-					}   */
-					mJsonData = controller.getService().findAll();
-
-					XmlDB.getInstance(WelcomActivity.this).saveKey(
-							StringPools.CCBN_ALL_DATA, mJsonData);
+									mEventDataNew.getUpdatedAt())) {*/
+						mJsonData = controller.getService().findAll();  
+						XmlDB.getInstance(WelcomeActivity.this).saveKey(
+								StringPools.CCBN_ALL_DATA, mJsonData);  
+						newsData = controller.getService().getNewsData();      
+						XmlDB.getInstance(WelcomeActivity.this).saveKey(  
+								StringPools.CCBN_NEWS_DATA, newsData);
+					/*}*/     
 				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					e.printStackTrace(); 
+				} catch (Exception e) {   
+					e.printStackTrace(); 
+				} 
 			};
-		}.start(); 
-	}
-
+		}.start();      
+		
+		/*GetNewsDataTask getNewsDataTask = new GetNewsDataTask();
+		getNewsDataTask.execute();*/ 
+	}  
 	@Override
 	public void findView() {
 		mLogo = (ImageView) findViewById(R.id.logo);
 	}
 
 	@Override
-	public void addAction() {
+	public void addAction() {   
 
 	}
 
-	private void goToNextPage() {
-		Intent intent = new Intent(WelcomActivity.this, HomeActivity.class);
-		Resources.latitude = mCheckInData.latitude;
-		Resources.longitude = mCheckInData.longitude;
-		Resources.address = mCheckInData.address;
-		startActivity(intent);
+	private void goToNextPage() {   
+		Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);  
+		Resources.latitude = mCheckInData.latitude;  
+		Resources.longitude = mCheckInData.longitude;  
+		Resources.address = mCheckInData.address;  
+		startActivity(intent);  
 		finish();
+		mLocationClient.getLocOption().setOpenGps(false);
+		mLocationClient.stop();
 	}
+	
 	private void getAddress() {
 		MKSearch mMKSearch = new MKSearch();
 		mBMapManagerNew = new BMapManager(this);
 		mBMapManagerNew.init(StringPools.baiDuMapStrKey, null);
-		mMKSearch.init(mBMapManagerNew, new MySearchListener());
+		mMKSearch.init(mBMapManagerNew, new MySearchListener());   
 		mMKSearch.reverseGeocode(new GeoPoint((int) (locData.latitude * 1E6),
-				(int) (locData.longitude * 1E6)));
-	}
-
-	
+				(int) (locData.longitude * 1E6)));   
+	}     
 	
 	/**
-	 * 监听函数，又新位置的时候，格式化成字符串，输出到屏幕中
+	 * 监听函数，有新位置的时候，格式化成字符串，输出到屏幕中 
 	 */
 	public class MyLocationListenner implements BDLocationListener {
 		@Override
@@ -157,9 +150,9 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 			mCheckInData.latitude = location.getLatitude();
 			mCheckInData.longitude = location.getLongitude();
 			locData.direction = 2.0f;
-			locData.accuracy = location.getRadius();
-			locData.direction = location.getDerect();
-			getAddress();
+			locData.accuracy = location.getRadius(); 
+			locData.direction = location.getDerect(); 
+			getAddress();    
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {
@@ -170,9 +163,9 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 	}
 
 	/**
-	 * 内部类实现MKSearchListener接口,用于实现异步搜索服务
+	 * 内部类实现MKSearchListener接口,用于实现异步搜索服务  
 	 * 
-	 * @author liufeng
+	 * @author liufeng 
 	 */
 	public class MySearchListener implements MKSearchListener {
 		/**
@@ -189,21 +182,19 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 				return;
 			}
 			StringBuffer sb = new StringBuffer();
-			// 经纬度所对应的位置
-			sb.append(result.strAddr).append("/n");
+			// 经纬度所对应的位置  
+			sb.append(result.strAddr);
 			addressStr = sb.toString();
 			try {
-				addressStr = new String(addressStr.getBytes(),"UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addressStr = new String(addressStr.getBytes(),"UTF-8"); 
+			} catch (UnsupportedEncodingException e) {  
+				e.printStackTrace();    
 			}
 			
-			mCheckInData.address = addressStr;
-			System.out.println(addressStr);
-			goToNextPage();
-		}
-
+			mCheckInData.address = addressStr;  
+			System.out.println(addressStr);   
+			goToNextPage();  
+		}  
 		/**
 		 * 驾车路线搜索结果
 		 * 
@@ -214,7 +205,8 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		 */
 		@Override
 		public void onGetDrivingRouteResult(MKDrivingRouteResult result,
-				int iError) {
+				int iError) { 
+			
 		}
 
 		/**
@@ -225,10 +217,11 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 		 * @param type
 		 *            返回结果类型（11,12,21:poi列表 7:城市列表）
 		 * @param iError
-		 *            错误号（0表示正确返回）
+		 *            错误号（0表示正确返回）  
 		 */
 		@Override
 		public void onGetPoiResult(MKPoiResult result, int type, int iError) {
+			
 		}
 
 		/**
@@ -264,13 +257,27 @@ public class WelcomActivity extends Activity implements ActivityInterface {
 
 		@Override
 		public void onGetPoiDetailSearchResult(int arg0, int arg1) {
-
+			
 		}
 
 		@Override
 		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
-
+			
 		}
 	}
-	
+
+	class GetNewsDataTask extends AsyncTask<Void, Integer, Integer>{    
+		@Override
+		protected Integer doInBackground(Void... params) {  
+			try {
+				newsData = controller.getService().getNewsData();    
+				XmlDB.getInstance(WelcomeActivity.this).saveKey(  
+						StringPools.CCBN_NEWS_DATA, newsData);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+			return null;
+		}  
+	}
 }

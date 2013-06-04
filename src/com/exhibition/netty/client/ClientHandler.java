@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import com.exhibition.MessageActivity;
+import com.exhibition.R;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.domain.mobile.MessageObject;
@@ -52,7 +53,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
                 case STRING:
                     String message = ((StringMessage) obj).getValue();
                     addMessageToList(message);
-                    Notification notification = new Notification(android.R.id.icon, message, System.currentTimeMillis());
+                    Notification notification = new Notification(R.drawable.icon, message, System.currentTimeMillis());
                     Intent intent = new Intent(context, MessageActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
                     notification.setLatestEventInfo(context, "推送的消息", message, pendingIntent);

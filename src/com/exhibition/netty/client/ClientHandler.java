@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.exhibition.MessageActivity;
+import com.exhibition.R;
 import com.exhibition.conts.StringPools;
 import com.exhibition.db.XmlDB;
 import com.exhibition.domain.mobile.MessageObject;
@@ -38,7 +39,7 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
     }    
 
     /**
-     * linkService(socket连接)回调
+     * linkService(socket连接)回调 
      */
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         Object obj = e.getMessage();
@@ -51,10 +52,11 @@ public class ClientHandler extends SimpleChannelUpstreamHandler {
                 case RESP_TOKEN:
                     XmlDB.getInstance(context).saveKey(StringPools.mServiceToken, ((RespToken) obj).getToken());
                     break;
-                case STRING:  
-                    String message = ((StringMessage) obj).getValue();  
-                    addMessageToList(message);   
-                    Notification notification = new Notification(android.R.id.icon, message, System.currentTimeMillis());
+
+                case STRING:
+                    String message = ((StringMessage) obj).getValue();
+                    addMessageToList(message);
+                    Notification notification = new Notification(R.drawable.icon, message, System.currentTimeMillis());
                     Intent intent = new Intent(context, MessageActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
                     notification.setLatestEventInfo(context, "推送的消息", message, pendingIntent);

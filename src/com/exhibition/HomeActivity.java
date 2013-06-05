@@ -61,9 +61,9 @@ public class HomeActivity extends Activity implements ActivityInterface,
 	private void socketLink() {
 		//打开socket连接服务
 		startService(serviceIntent);
-	}
+	}  
 
-	private void initData() { 
+	public void initData() { 
 		serviceIntent = new Intent(this,SocketService.class);
 		for (int i = 0; i < itemImgs.length; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();

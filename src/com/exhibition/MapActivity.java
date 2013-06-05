@@ -7,6 +7,7 @@ import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.exhibition.conts.StringPools;
+import com.exhibition.interfaces.ActivityInterface;
 import com.exhibition.listener.HomeClickListener;
 
 import android.app.Activity;
@@ -19,7 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MapActivity extends Activity {
+public class MapActivity extends Activity implements ActivityInterface{
 	private Button btHome;
 	private TextView tvTitle;
 	private BMapManager bmapManager;
@@ -54,8 +55,25 @@ public class MapActivity extends Activity {
 		tvTitle.setText(R.string.map);*/
 		
 		setContentView(R.layout.activity_map);
-		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
-		tvTitle.setText(R.string.map);
+		
+		
 		
 	}
+	@Override
+	public void initData() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void findView() {
+		tvTitle = (TextView) this.findViewById(R.id.title_text_second);
+		btHome = (Button) this.findViewById(R.id.home_button_second);
+	}
+	@Override
+	public void addAction() {
+		tvTitle.setText(R.string.map);
+		btHome.setOnClickListener(new HomeClickListener(this));
+	}
+	
 }

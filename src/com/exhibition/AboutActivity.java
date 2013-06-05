@@ -29,7 +29,7 @@ public class AboutActivity extends Activity implements ActivityInterface {
 		addAction();  
 	}
 	
-	private void initData() {  
+	public void initData() {  
 		titleStr = getIntent().getStringExtra("title");
 		aboutDetail = Tools.transformToHtml(getIntent().getStringExtra("detail"));
 	} 

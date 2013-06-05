@@ -29,7 +29,7 @@ public class NewsDetailActivity extends Activity
 		addAction();  
 	}
 	
-	private void initData() {     
+	public void initData() {     
 		newsDetail = Tools.transformToHtml(getIntent().getStringExtra("detail"));
 	}
 	

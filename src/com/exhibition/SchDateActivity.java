@@ -63,7 +63,7 @@ public class SchDateActivity extends Activity implements ActivityInterface {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initData() {
+	public void initData() {
 		mTitleText = getIntent().getStringExtra("title");
 		mEventDates = ListUtil
 				.removeDuplicateWithOrder((List<String>) getIntent()

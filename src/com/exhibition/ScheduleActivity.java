@@ -86,7 +86,7 @@ public class ScheduleActivity extends Activity implements ActivityInterface,
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initData() {
+	public void initData() {
 		mPageTitle = getIntent().getStringExtra("title");
 		mEventSchedules = (ArrayList<EventSchedule>) getIntent().getExtras()
 				.get("sch");

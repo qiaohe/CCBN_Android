@@ -37,7 +37,13 @@ public class VideoActivity extends Activity implements ActivityInterface {
 		file = new File(Environment.getExternalStorageDirectory(),"video.mp4") ;
 		findView();               
 		addAction();         
-	}       
+	}      
+	@Override
+	public void initData() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void findView(){
 		btHome = (Button) this.findViewById(R.id.home_button_second);
@@ -92,4 +98,5 @@ public class VideoActivity extends Activity implements ActivityInterface {
 		videoView.seekTo(previousPosition);
 		videoView.start(); 
 	}
+	
 }

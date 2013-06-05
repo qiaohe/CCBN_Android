@@ -34,7 +34,12 @@ public class QRCodeActivity extends Activity implements ActivityInterface {
         password = dtPassword.getText().toString();
         addAction();
     }
-
+    @Override
+	public void initData() {
+		// TODO Auto-generated method stub
+		
+	}
+    
     @Override
     public void findView() {
         dtUsername = (EditText) this.findViewById(R.id.activity_qrcode_et_username);
@@ -58,4 +63,6 @@ public class QRCodeActivity extends Activity implements ActivityInterface {
             }
         });
     }
+
+	
 }

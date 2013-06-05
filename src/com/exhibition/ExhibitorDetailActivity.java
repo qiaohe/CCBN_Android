@@ -21,21 +21,19 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 	private TextView tvThree;
 	private Button btHome;
 	private TextView tvTitle;
-	private String strTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
-		setContentView(R.layout.exhibitor_detail);
-		initData();
-		findView();
-		addAction();
+		setContentView(R.layout.exhibitor_detail); 
+		initData(); 
+		findView(); 
+		addAction(); 
 	}
 
-	private void initData() {
-		exhibitor = (Exhibitor) getIntent().getExtras().get("exhibitor");
-		strTitle = getIntent().getStringExtra("title");
+	public void initData() {
+		exhibitor = (Exhibitor) getIntent().getExtras().get("exhibitor"); 
 	}
 	
 	@Override
@@ -55,9 +53,8 @@ public class ExhibitorDetailActivity extends Activity implements ActivityInterfa
 					  "联系电话：" + exhibitor.getPhone() + "\n" + 
 				      "网       址：" + exhibitor.getWebsite());
 		tvThree.setText(exhibitor.getDescription());
-		tvTitle.setText(strTitle);
+		tvTitle.setText("参展商详细");
 		btHome.setOnClickListener(new HomeClickListener(ExhibitorDetailActivity.this));
-		
 	}  
 	
 }

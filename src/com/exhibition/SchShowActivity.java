@@ -54,7 +54,7 @@ public class SchShowActivity extends Activity implements
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initData() {
+	public void initData() {
 		mEventSchedules = (List<EventSchedule>) getIntent().getExtras().get(
 				"sch");
 		//mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");

@@ -73,7 +73,7 @@ public class SpeakerActivity extends Activity implements ActivityInterface,OnScr
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initData() {
+	public void initData() {
 		mSpeakers = (List<Speaker>) getIntent().getExtras().get("spea");
 		System.out.println("111111111111======="+mSpeakers.size());
 		for(int i=0;i<mSpeakers.size();i++){

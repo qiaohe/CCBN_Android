@@ -103,4 +103,10 @@ public class BaseActivity extends Activity implements ActivityInterface,OnClickL
 		// 不销毁ProgressDialog会出现view not attached to window manager异常
 		dismissProgress();
 	}
+
+	@Override
+	public void initData() {
+		// TODO Auto-generated method stub
+		
+	}
 }

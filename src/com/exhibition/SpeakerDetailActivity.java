@@ -24,7 +24,6 @@ public class SpeakerDetailActivity extends Activity implements
 	private TextView mSpeakerName, mSpeakerCompany, mSpeakerPosition,
 			mSpeakerContent;
 	private Button mHomeBtn;
-	private String titleStr = "";
 	private Speaker mSpeaker;
 	private List<Speaker> mSpeakers = new ArrayList<Speaker>();
 	private String speakerName;
@@ -34,13 +33,12 @@ public class SpeakerDetailActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.speaker_detail_page);
-		initData();
+		initData();  
 		findView();
 		addAction();
 	}
 
-	private void initData() {
-		titleStr = getIntent().getStringExtra("title");
+	public void initData() {
 		speakerName = getIntent().getStringExtra("speaker");
 		mSpeakers = DataUtil.getSpeakers(this);
 		for (int i = 0; i < mSpeakers.size(); i++) {
@@ -56,14 +54,14 @@ public class SpeakerDetailActivity extends Activity implements
 		mSpeakerPhoto = (ImageView) findViewById(R.id.speakeritem_photo);
 		mSpeakerName = (TextView) findViewById(R.id.speaker_names);
 		mSpeakerCompany = (TextView) findViewById(R.id.speaker_company);
-		mSpeakerPosition = (TextView) findViewById(R.id.speaker_position);
-		mSpeakerContent = (TextView) findViewById(R.id.speaker_content);
-		mHomeBtn = (Button) findViewById(R.id.home_button);
+		mSpeakerPosition = (TextView) findViewById(R.id.speaker_position); 
+		mSpeakerContent = (TextView) findViewById(R.id.speaker_content);  
+		mHomeBtn = (Button) findViewById(R.id.home_button);  
 	}
 
 	@Override
-	public void addAction() {
-		mTitle.setText(titleStr);
+	public void addAction() {  
+		mTitle.setText("嘉宾详细");
 		if (mSpeaker.getPhoto().equals("")) {
 			mSpeakerPhoto.setImageResource(R.drawable.default_avatar);
 		} else {

@@ -72,7 +72,7 @@ public class ExhibitorActivity extends Activity implements
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initData() {
+	public void initData() {
 		//getExtras返回一个Map数据
 		mExhibitors = (List<Exhibitor>) getIntent().getExtras().get("exh");
 		strTitle = getIntent().getStringExtra("title");

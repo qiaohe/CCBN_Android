@@ -108,6 +108,11 @@ public class WelcomeActivity extends Activity implements ActivityInterface {
 		getNewsDataTask.execute();*/ 
 	}  
 	@Override
+	public void initData() {
+		
+		
+	}
+	@Override
 	public void findView() {
 		mLogo = (ImageView) findViewById(R.id.logo);
 	}
@@ -280,4 +285,6 @@ public class WelcomeActivity extends Activity implements ActivityInterface {
 			return null;
 		}  
 	}
+
+	
 }
